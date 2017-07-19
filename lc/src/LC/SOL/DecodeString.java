@@ -2,9 +2,6 @@ package LC.SOL;
 
 import java.util.Stack;
 
-/**
- * Created by nanhong on 12/12/2016.
- */
 public class DecodeString {
     public class Solution {
         public String decodeString(String s) {

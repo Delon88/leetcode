@@ -5,9 +5,6 @@ import LC.DS.Interval;
 import java.util.Map;
 import java.util.TreeMap;
 
-/**
- * Created by nanhong on 7/15/2017.
- */
 public class FindRightInterval {
     public class Solution {
         public int[] findRightInterval(Interval[] intervals) {

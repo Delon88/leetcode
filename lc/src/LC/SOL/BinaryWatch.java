@@ -3,9 +3,6 @@ package LC.SOL;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by nanhong on 1/13/2017.
- */
 public class BinaryWatch {
     public class Solution {
         /**

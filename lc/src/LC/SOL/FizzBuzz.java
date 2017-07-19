@@ -3,9 +3,6 @@ package LC.SOL;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by nanhong on 1/15/2017.
- */
 public class FizzBuzz {
     public class Solution {
         public List<String> fizzBuzz(int n) {

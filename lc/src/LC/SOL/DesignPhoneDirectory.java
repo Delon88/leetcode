@@ -4,9 +4,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-/**
- * Created by nanhong on 12/11/2016.
- */
 public class DesignPhoneDirectory {
     public class PhoneDirectory {
 

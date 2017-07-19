@@ -1,8 +1,5 @@
 package LC.SOL;
 
-/**
- * Created by nanhong on 1/22/2017.
- */
 public class BattleshipsinaBoard {
     public class Solution {
         public int countBattleships(char[][] board) {

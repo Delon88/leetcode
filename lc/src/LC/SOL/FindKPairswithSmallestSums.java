@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-/**
- * Created by nanhong on 11/27/2016.
- */
 public class FindKPairswithSmallestSums {
     static class Solution {
 

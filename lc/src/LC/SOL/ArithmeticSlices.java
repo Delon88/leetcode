@@ -1,8 +1,5 @@
 package LC.SOL;
 
-/**
- * Created by nanhong on 1/15/2017.
- */
 public class ArithmeticSlices {
     public class Solution {
         public int numberOfArithmeticSlices(int[] A) {

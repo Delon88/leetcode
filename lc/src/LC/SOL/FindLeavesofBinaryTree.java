@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by nanhong on 11/26/2016.
- */
 public class FindLeavesofBinaryTree {
 
     public static void main(String[] args) {

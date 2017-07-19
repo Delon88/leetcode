@@ -1,8 +1,5 @@
 package LC.SOL;
 
-/**
- * Created by nanhong on 12/11/2016.
- */
 public class CombinationSumIV {
     public static class Solution {
         public int combinationSum4(int[] nums, int target) {

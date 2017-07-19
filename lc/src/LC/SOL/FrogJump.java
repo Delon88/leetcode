@@ -5,9 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by nanhong on 1/15/2017.
- */
 public class FrogJump {
     public class Solution {
         public boolean canCross(int[] stones) {

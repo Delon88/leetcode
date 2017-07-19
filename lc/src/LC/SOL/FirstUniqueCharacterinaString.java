@@ -1,8 +1,5 @@
 package LC.SOL;
 
-/**
- * Created by nanhong on 12/12/2016.
- */
 public class FirstUniqueCharacterinaString {
     public int firstUniqChar(String s) {
         int[] c = new int[26];

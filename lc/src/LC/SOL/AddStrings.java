@@ -1,8 +1,5 @@
 package LC.SOL;
 
-/**
- * Created by nanhong on 1/15/2017.
- */
 public class AddStrings {
     public class Solution {
         public String addStrings(String num1, String num2) {
