@@ -29,20 +29,15 @@ public class _132Pattern {
 
         public boolean find132pattern(int[] nums) {
             Stack<Pair> stack = new Stack<>();
-            if (nums == null || nums.length < 3) {
-                return false;
-            }
-            stack.push(new Pair(nums[0], nums[0]));
-
-            for (int i = 1; i < nums.length; i++) {
-                if (stack.isEmpty() || nums[i] < stack.peek().min) stack.push(new Pair(nums[i], nums[i]));
-                else if (nums[i] > stack.peek().min) {
+            for ( int n : nums) {
+                if ( stack.isEmpty() || n < stack.peek().min ) stack.push(new Pair(n , n ));
+                else if ( n > stack.peek().min) {
                     Pair p = stack.pop();
-                    if (nums[i] < p.max) return true;
+                    if ( n < p.max ) return true;
                     else {
-                        p.max = nums[i];
-                        while (!stack.isEmpty() && nums[i] >= stack.peek().max) stack.pop();
-                        if (!stack.isEmpty() && stack.peek().min < nums[i]) return true;
+                        p.max = n;
+                        while ( !stack.isEmpty() && n >= stack.peek().max ) stack.pop();
+                        if ( !stack.isEmpty() && n > stack.peek().min) return true;
                         stack.push(p);
                     }
                 }
