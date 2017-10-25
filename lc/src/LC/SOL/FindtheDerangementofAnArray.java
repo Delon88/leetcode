@@ -7,10 +7,11 @@ public class FindtheDerangementofAnArray {
 
         public int findDerangement(int n) {
             // n!= ( n - 1) * ( (n - 1)!  )
-            int ret = 1;
+            long ret = 1;
             for (int i = 1; i <= n; i++) {
-
+                ret = (((ret * i) % M) + (i % 2 == 0 ? 1 : -1)) % M;
             }
+            return (int) ret;
         }
     }
 }
