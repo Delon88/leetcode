@@ -13,30 +13,30 @@ public class MaximumWidthofBinaryTree {
             int with = 0;
             if (root == null) return 0;
             Queue<Node> q = new LinkedList<>();
-            q.offer(new Node(root, 0));
-            while ( !q.isEmpty()) {
+            q.offer(new Node(root, 1));
+            while (!q.isEmpty()) {
                 int size = q.size();
                 List<Integer> tmpIndex = new ArrayList<>();
-                for ( int i = 0 ; i < size ; i++) {
+                int l = q.peek().seq;
+                int r = l;
+                for (int i = 0; i < size; i++) {
                     Node node = q.poll();
-                    tmpIndex.add(node.wIndex);
-                    if ( node.node.left != null ) q.offer(new Node(node.node.left , node.wIndex -1));
-                    if ( node.node.right != null ) q.offer(new Node(node.node.right , node.wIndex +1));
+                    r = node.seq;
+                    if (node.node.left != null) q.offer(new Node(node.node.left, node.seq * 2));
+                    if (node.node.right != null) q.offer(new Node(node.node.right, node.seq * 2 + 1));
                 }
-                if ( tmpIndex.size() != 1) {
-                    with = Math.max(with, tmpIndex.get(tmpIndex.size() - 1) - tmpIndex.get(0));
-                }
+                with = Math.max( r - l + 1, with);
             }
             return with;
         }
 
         class Node {
             TreeNode node;
-            int wIndex;
+            int seq;
 
-            public Node(TreeNode node, int wIndex) {
+            public Node(TreeNode node, int seq) {
                 this.node = node;
-                this.wIndex = wIndex;
+                this.seq = seq;
             }
         }
     }
