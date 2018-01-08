@@ -1,34 +1,24 @@
 package LC.SOL;
 
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RemoveComments {
     class Solution {
+
+        Pattern p = Pattern.compile("(//.*)|(/\\*(.|\n)*?\\*/)");
+
         public List<String> removeComments(String[] source) {
-            String startStr = "";
-            boolean start = false;
+            String code = String.join("\n", source);
+            Pattern p = Pattern.compile("(//.*)|(/\\*(.|\n)*?\\*/)");
+            Matcher m = p.matcher(code);
+            String[] arr = m.replaceAll("").split("\n");
             List<String> ret = new ArrayList<>();
-            for (String s : source) {
-                if (s.contains("//")) {
-                    String removed = s.substring(0, s.indexOf("//"));
-                    ret.add(removed);
-                } else if (s.contains("/*") || s.contains("*/")) {
-                    if (s.contains("/*") && !start) {
-                        start = true;
-                        startStr = s.substring(0, s.indexOf("/*"));
-                        s = s.substring(s.indexOf("/*") + 2);
-                    }
-                    if (s.contains("*/")) {
-                        String mulline = startStr + s.substring(s.indexOf("*/") + 2);
-                        if (!mulline.equals("")) ret.add(startStr + s.substring(s.indexOf("*/") + 2));
-                        start = false;
-                    }
-                } else {
-                    if (!start) {
-                        ret.add(s);
-                    }
-                }
+            for (String s : arr) {
+                if ( !s.equals("")) ret.add(s);
             }
             return ret;
         }
