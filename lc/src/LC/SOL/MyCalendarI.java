@@ -13,15 +13,11 @@ public class MyCalendarI {
 
         public boolean book(int start, int end) {
             // check if overlap
-            Map.Entry<Integer,Integer> s = map.floorEntry(start);
-            Map.Entry<Integer,Integer> e = map.ceilingEntry(end);
-            if ( s != null &&  start < s.getValue() ) {
-                return false;
-            }
-            if ( e != null && end > e.getKey()) {
-                return false;
-            }
-            map.put(start , end);
+            Map.Entry<Integer,Integer> floor = map.floorEntry(start);
+            if ( floor != null && floor.getValue() > start) return false;
+            Map.Entry<Integer,Integer> ceil = map.ceilingEntry(start);
+            if ( ceil != null && ceil.getKey() < end ) return false;
+            map.put(start, end);
             return true;
         }
     }
