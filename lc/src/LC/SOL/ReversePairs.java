@@ -9,8 +9,8 @@ public class ReversePairs {
             int[] bit = new int[copy.length + 1];
             Arrays.sort(copy);
             int ret = 0;
-            for ( int e : nums) {
-                ret+= getSum(bit, index( copy,2 * e  + 1));
+            for (int e : nums) {
+                ret += getSum(bit, index(copy, 2 * e + 1));
                 insert(bit, index(copy, e));
             }
             return ret;
@@ -46,8 +46,32 @@ public class ReversePairs {
         }
     }
 
+    static class Solution1 {
+        public int reversePairs(int[] nums) {
+            return mergeSort(nums, 0, nums.length - 1);
+        }
+
+        int mergeSort(int[] nums, int start, int end) {
+            if (start >= end) return 0;
+            int mid = start + ((end - start) / 2);
+            int ret = mergeSort(nums, start, mid) + mergeSort(nums, mid + 1, end);
+            int[] merge = new int[end - start + 1];
+            int i = start, j = mid + 1, k = 0, p = mid + 1;
+            while (i <= mid) {
+                while (p <= end && nums[i] > 2L * nums[p]) p++;
+                ret += p - (mid + 1);
+                while (j <= end && nums[i] >= nums[j]) { merge[k++] = nums[j++];}
+                merge[k++] = nums[i++];
+            }
+
+            while (j <= end) merge[k++] = nums[j++];
+            System.arraycopy(merge, 0, nums, start, merge.length);
+            return ret;
+        }
+    }
+
     public static void main(String[] args) {
-        int[] nums = {1, 8, 2, 3, 1, 3};
-        new Solution().reversePairs(nums);
+        int[] nums = {1, 3, 2, 3, 1};
+        new Solution1().reversePairs(nums);
     }
 }
