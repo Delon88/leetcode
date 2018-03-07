@@ -1,42 +1,26 @@
 package LC.SOL;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class FreedomTrail {
     class Solution {
         public int findRotateSteps(String ring, String key) {
-            Map<Character, List<Integer>> map = new HashMap<>();
-            for (int i = 0; i < ring.length(); i++) {
-                char c = ring.charAt(i);
-                if (!map.containsKey(c)) {
-                    map.put(c, new ArrayList<>());
-                }
-                map.get(c).add(i);
-            }
-            int index = 0;
-            int ret = 0 ;
-            for (int i = 0; i < key.length(); i++) {
-                char c = key.charAt(i);
-                int min = Integer.MAX_VALUE;
-                int nextIndex = -1;
-                for ( int next : map.get(c)) {
-                    if ( Math.abs(index - next) < min ) {
-                        nextIndex = next;
-                        min = Math.abs(index - next);
+            int m = key.length();
+            int n = ring.length();
+            int[][] dp = new int[m + 1][n];
+            for (int i = m - 1; i >= 0; i--) {
+                for (int j = 0; j < n; j++) {
+                    dp[i][j] = Integer.MAX_VALUE;
+                    // move backward from m + 1 to m
+                    for (int k = 0; k < n; k++) {
+                        if (ring.charAt(k) == key.charAt(i)) {
+                            int dist = Math.abs(j - k);
+                            dist = Math.min(dist, Math.abs(n - dist);
+                            dp[i][j] = Math.min(dp[i][j], dist + dp[i + 1][k]);
+                        }
                     }
-                    if ( Math.abs(index + key.length() - next) < min) {
-                        nextIndex = next;
-                        min = Math.abs(index + key.length() - next);
-                    }
-                    index = nextIndex;
                 }
-                ret += ( min + 1);
             }
-            return ret;
+            return dp[0][0] + m;
         }
     }
 }
