@@ -14,7 +14,7 @@ public class FreedomTrail {
                     for (int k = 0; k < n; k++) {
                         if (ring.charAt(k) == key.charAt(i)) {
                             int dist = Math.abs(j - k);
-                            dist = Math.min(dist, Math.abs(n - dist);
+                            dist = Math.min(dist, Math.abs(n - dist));
                             dp[i][j] = Math.min(dp[i][j], dist + dp[i + 1][k]);
                         }
                     }

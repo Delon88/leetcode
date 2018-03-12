@@ -5,24 +5,21 @@ import java.util.Arrays;
 public class SuperWashingMachines {
     class Solution {
         public int findMinMoves(int[] machines) {
-
-            long sum = 0;
-            for (int n : machines) {
-                sum += n;
-            }
-            if (sum % machines.length != 0) return -1;
-
-            int[] diff = new int[machines.length];
-
-            int target = (int) (sum / machines.length);
+            int n = machines.length;
+            int sum = 0;
+            for (int i : machines) sum += i;
+            if (sum % n != 0) return -1;
+            int[] diff = new int[n];
+            int target = sum / n;
             for (int i = 0; i < machines.length; i++) {
                 diff[i] = machines[i] - target;
             }
-            System.out.println(Arrays.toString(diff));
             int ret = 0;
-            for (int i = 0; i < machines.length - 1; i++) {
-                ret += Math.abs(diff[i]);
-                diff[i + 1] = diff[i] + diff[i + 1];
+            int d = 0;
+            for (int i = 0; i < n; i++) {
+                ret = Math.max(Math.abs(diff[i]), ret);
+                d += diff[i];
+                ret = Math.max(Math.abs(d), ret);
             }
             return ret;
         }
