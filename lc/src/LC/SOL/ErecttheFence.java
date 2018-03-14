@@ -26,10 +26,10 @@ public class ErecttheFence {
                         nextPoint = p;
                     }
                 }
-                for ( Point p : points) {
-                    if ( p == cur ) continue;
+                for (Point p : points) {
+                    if (p == cur) continue;
                     int cross = crossProduct(cur, nextPoint, p);
-                    if ( cross == 0 ) set.add(p);
+                    if (cross == 0) set.add(p);
                 }
                 cur = nextPoint;
             } while (cur != leftMost);
@@ -58,5 +58,21 @@ public class ErecttheFence {
                 y = b;
             }
         }
+    }
+
+    public static void main(String[] args) {
+        String exMsg = "com.amazon.servicecontainer=[ccom.amazon.middleware]";
+        String processName = "dummpy";
+        if ( exMsg != null && exMsg.startsWith("com.amazon.servicecontainer")) {
+            // get real package name for this crash
+            int leftBoundary = exMsg.indexOf("[", "com.amazon.servicecontainer".length() + 1);
+            int rightBoundary = exMsg.indexOf("]", leftBoundary + 1);
+            if (leftBoundary != -1 && rightBoundary != -1) {
+                processName = exMsg.substring(leftBoundary + 1, rightBoundary);
+            }
+        }
+        System.out.println(processName);
+
+
     }
 }
