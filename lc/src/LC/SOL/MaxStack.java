@@ -1,8 +1,6 @@
 package LC.SOL;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 public class MaxStack {
 
@@ -27,7 +25,19 @@ public class MaxStack {
 //             stack.pop(); -> 1
 //             stack.top(); -> 5
 
-
+    public static void main(String[] args) {
+        MaxStack stack = new MaxStack();
+        stack.push(5);
+        stack.push(1);
+        stack.push(5);
+        stack.top();
+        stack.popMax();
+        stack.top();
+        stack.peekMax();
+        stack.print();
+        System.out.println(stack.pop());
+        stack.top();
+    }
     class DoubleLinkedListNode {
         DoubleLinkedListNode prev;
         DoubleLinkedListNode next;
@@ -39,6 +49,7 @@ public class MaxStack {
             this.keys = new HashSet<>();
         }
     }
+
     /**
      * initialize your data structure here.
      */
@@ -46,6 +57,13 @@ public class MaxStack {
 
     Stack<DoubleLinkedListNode> stack;
 
+    public void print() {
+        DoubleLinkedListNode cur = head.next;
+        while ( cur != head) {
+            System.out.print(cur.val + ",");
+            cur =cur.next;
+        }
+    }
     public MaxStack() {
         head = new DoubleLinkedListNode(0);
         head.next = head;
@@ -53,24 +71,66 @@ public class MaxStack {
         stack = new Stack<>();
     }
 
-    public void push(int x) {
+    public DoubleLinkedListNode addTail(int val) {
+        DoubleLinkedListNode tail = head.prev;
+        DoubleLinkedListNode newNode = new DoubleLinkedListNode(val);
+        tail.next = newNode;
+        newNode.prev = tail;
+        newNode.next = head;
+        head.prev = newNode;
+        return newNode;
+    }
 
+    public int remove(DoubleLinkedListNode node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        node.prev = null;
+        node.next = null;
+        return node.val;
+    }
+
+
+    public void push(int x) {
+        DoubleLinkedListNode newNode = addTail(x);
+        if (stack.isEmpty() || x >= stack.peek().val) {
+            stack.push(newNode);
+        }
     }
 
     public int pop() {
-
+        int value = remove(head.prev);
+        if (!stack.isEmpty() && stack.peek().val == value) {
+            stack.pop();
+        }
+        return value;
     }
 
     public int top() {
-
+        return head.prev.val;
     }
 
     public int peekMax() {
-
+        if (!stack.isEmpty()) {
+            return stack.peek().val;
+        }
+        return -1;
     }
 
     public int popMax() {
-
+        if (!stack.isEmpty()) {
+            DoubleLinkedListNode node = stack.peek();
+            Stack<Integer> tmp = new Stack<>();
+            int v = 0;
+            while ((v = pop()) != node.val) {
+                tmp.push(v);
+            }
+            while (!tmp.isEmpty()) {
+                push(tmp.pop());
+            }
+            return node.val;
+        } else {
+            return -1;
+        }
     }
 
 /**
