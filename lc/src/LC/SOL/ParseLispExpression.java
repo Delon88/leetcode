@@ -1,8 +1,6 @@
 package LC.SOL;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ParseLispExpression {
     static class Solution {
@@ -41,8 +39,13 @@ public class ParseLispExpression {
 
         public int evaluate(String expression) {
             Set<String> operators = new HashSet<>(Arrays.asList("add", "mult", "let"));
-            for (int i = 0; i < expression.length(); i++) {
+            Stack<Map<String,Integer>> scope = new Stack<>();
+            int i = 0 , n = expression.length();
+            while ( i < n ) {
+                char c = expression.charAt(i);
+                if ( c == '(') {
 
+                }
             }
         }
     }
