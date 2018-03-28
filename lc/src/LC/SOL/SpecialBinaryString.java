@@ -1,5 +1,9 @@
 package LC.SOL;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class SpecialBinaryString {
 
 //    Special binary strings are binary strings with the following two properties:
@@ -16,13 +20,29 @@ public class SpecialBinaryString {
 //    Input: S = "11011000"
 //    Output: "11100100"
 //    Explanation:
+    // 10101100
 //    The strings "10" [occuring at S[1]] and "1100" [at S[3]] are swapped.
 //    This is the lexicographically largest string possible after some number of swaps.
 
 
-    class Solution {
+    static class Solution {
         public String makeLargestSpecial(String S) {
+            int count = 0;
+            int start = 0;
+            List<String> ret = new ArrayList<>();
+            for (int i = 0; i < S.length(); i++) {
+                if (S.charAt(i) == '1') count++;
+                else count--;
+                if (count == 0) {
+                    ret.add('1' + makeLargestSpecial(S.substring(start + 1, i)) + '0');
+                    start = i + 1;
+                }
+            }
+            Collections.sort(ret, Collections.reverseOrder());
+            return String.join("", ret);
+        }
 
+        public static void main(String[] args) {
+            new Solution().makeLargestSpecial("10101100");
         }
     }
-}
