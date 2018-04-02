@@ -46,3 +46,4 @@ public class SpecialBinaryString {
             new Solution().makeLargestSpecial("10101100");
         }
     }
+}
