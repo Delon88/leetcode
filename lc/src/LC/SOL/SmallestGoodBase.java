@@ -44,14 +44,19 @@ public class SmallestGoodBase {
 //    k + 1 > m th square root of n > k
     class Solution {
         public String smallestGoodBase(String n) {
-            Long num = Long.parseLong(n);
+            long num = Long.parseLong(n);
             BigInteger bn = BigInteger.valueOf(num);
-            int maxBase = (int) (Math.log(num) / (long) Math.log(2));
-            for (int b =maxBase; b >= 2; b--) {
-                BigInteger k = BigInteger.valueOf((long) Math.pow(num , 1.0d/ b ));
-                BigInteger left = k.pow(b + 1).subtract(BigInteger.ONE);
+            int maxM = (int) (Math.log(num) /Math.log(2));
+            for (int m =maxM; m >= 2; m--) {
+                BigInteger k = BigInteger.valueOf((long)Math.pow(num, 1.0 / m));
+                //   k^m +1  - 1 = n( k - 1);
+                BigInteger left = k.pow(m + 1).subtract(BigInteger.ONE);
                 BigInteger right = bn.multiply(k.subtract(BigInteger.ONE));
+                if ( left.equals(right)) {
+                    return k.toString();
+                }
             }
+            return bn.subtract(BigInteger.ONE).toString();
         }
     }
 }
