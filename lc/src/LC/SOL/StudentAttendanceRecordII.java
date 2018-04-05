@@ -7,30 +7,32 @@ public class StudentAttendanceRecordII {
         char[] s = "ALP".toCharArray();
 
         public int checkRecord(int n) {
-            dfs(0, new StringBuilder(), n, 0, 0);
-            return count;
-        }
+            if (n == 1) return 3;
+            if (n == 2) return 8;
+            int m = 1000000007;
+            int[] A = new int[n];
+            int[] L = new int[n];
+            int[] P = new int[n];
 
-        void dfs(int level, StringBuilder at, int n, int A, int L) {
-            if (A > 1 || L > 2) return;
+            P[0] = 1;
+            L[0] = 1;
+            L[1] = 3;
+            A[0] = 1;
+            A[1] = 2;
+            A[2] = 4;
 
-            if (at.length() == n) {
-                count++;
-                return;
+            for (int i = 1; i < n; i++) {
+                A[i - 1] %= m;
+                P[i - 1] %= m;
+                L[i - 1] %= m;
+
+                P[i] = ((A[i - 1] + P[i - 1]) % m + L[i - 1]) % m;
+
+                if (i > 1) L[i] = ((A[i - 1] + P[i - 1]) % m + (A[i - 2] + P[i - 2]) % m) % m;
+
+                if (i > 2) A[i] = ((A[i - 1] + A[i - 2]) % m + A[i - 3]) % m;
             }
-
-            for (char c : s) {
-                at.append(c);
-                if (c == 'L') {
-                    L++;
-                } else {
-                    L = 0;
-                    if (c == 'A') A++;
-                }
-                dfs(level + 1, at, n, A, L);
-                at.deleteCharAt(at.length() - 1);
-            }
+            return ((A[n - 1] % m + P[n - 1] % m) % m + L[n - 1] % m) % m;
         }
-
     }
 }
