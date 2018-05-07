@@ -20,11 +20,8 @@ public class TwoSumIIIDatastructuredesign {
         /** Find if there exists any pair of numbers which sum is equal to the value. */
         public boolean find(int value) {
             for ( int n : map.keySet()) {
-                if ( value - n == n ) {
-                    return map.get(n) >= 2;
-                } else {
-                    return map.containsKey(value - n);
-                }
+                int diff = value - n;
+                if ( map.containsKey(diff) && ( diff != n || map.get(diff) >= 2 )) return true;
             }
             return false;
         }
