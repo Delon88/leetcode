@@ -38,7 +38,7 @@ public class NQueens {
             for ( int i = 0 ; i < n ;i++) {
                 StringBuilder b = new StringBuilder();
                 for ( int j = 0 ; j < n; j++) {
-                    if ( pos[i] == j ) b.append('QQ');
+                    if ( pos[i] == j ) b.append('Q');
                     else b.append('.');
                 }
                 ret.add(b.toString());
