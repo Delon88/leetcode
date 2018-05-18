@@ -1,5 +1,7 @@
 package LC.SOL;
 
+import java.math.BigInteger;
+
 public class AdditiveNumber {
 
 
@@ -27,14 +29,23 @@ public class AdditiveNumber {
 
     class Solution {
         public boolean isAdditiveNumber(String num) {
-
+            int n = num.length();
+            for (int i = 0; i <= n / 2; i++) {
+                for (int j = i + 1; j < n - 1; j++) {
+                    String op1 = num.substring(0 , i + 1);
+                    String op2 = num.substring(i + 1, j + 1);
+                    if ( dfs(op1, op2, num.substring(j + 1))) return true;
+                }
+            }
+            return false;
         }
 
-        boolean dfs(int i, String num, String path, int n1, int n2) {
-            int next = n1 + n2;
-            if (!num.startsWith(Integer.toString(next), i)) return false;
-
+        boolean dfs(String op1, String op2, String num) {
+            if ( num.length() == 0 ) return true;
+            if ((op1.length() > 1 && op1.charAt(0) == '0') || (op2.length() > 1 && op2.charAt(0) == '0')) return false;
+            String next = Long.toString(Long.parseLong(op1) + Long.parseLong(op2));
+            if (!num.startsWith(next)) return false;
+            return dfs(op2, next, num.substring(next.length()));
         }
-
     }
 }
