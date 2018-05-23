@@ -1,16 +1,28 @@
 package LC.SOL;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CountofSmallerNumbersAfterSelf {
     class Solution {
         public List<Integer> countSmaller(int[] nums) {
+            int[] sorted = Arrays.copyOf(nums, nums.length);
+            Arrays.sort(sorted);
             Map<Integer,Integer> map = new HashMap<>();
-            for ( int i : nums) { map.put(i, map.getOrDefault(i, 0) + 1);}
+            int rank = 1;
+            for ( int i : sorted) {
+                if ( !map.containsKey(i)) {
+                    map.put(i, rank);
+                    rank++;
+                }
+            }
             int[] bit = new int[map.size() + 1];
-            for( int i = nums.length - 1 ;
+            List<Integer> ret = new ArrayList<>();
+            for (  int i = nums.length - 1 ; i >= 0 ; i--) {
+                ret.add(query(bit, map.get(nums[i]) - 1 ));
+                update(bit, map.get(nums[i]) , 1);
+            }
+            Collections.reverse(ret);
+            return ret;
         }
 
         public void update(int[] bit, int index, int value) {
@@ -28,6 +40,5 @@ public class CountofSmallerNumbersAfterSelf {
             }
             return sum;
         }
-
     }
 }
