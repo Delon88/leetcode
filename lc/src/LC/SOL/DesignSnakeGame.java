@@ -40,15 +40,15 @@ public class DesignSnakeGame {
          @param food - A list of food positions
          E.g food = [[1,1], [1,0]] means the first food is positioned at [1,1], the second is at [1,0]. */
         public SnakeGame(int width, int height, int[][] food) {
-            snake = new LinkedList<>();
-            set = new HashSet<>();
+            this.food =food;
+            foodIndex = 0;
             row = height;
             col = width;
-            Position p = new Position(0, 0 );
-            snake.add(p);
+            set = new HashSet<>();
+            snake = new LinkedList<>();
+            Position p = new Position(0 , 0);
             set.add(p);
-            this.food = food;
-            foodIndex = 0;
+            snake.add(p);
         }
 
         /** Moves the snake.
@@ -57,27 +57,25 @@ public class DesignSnakeGame {
          Game over when snake crosses the screen boundary or bites its body. */
         public int move(String direction) {
             Position next = new Position(snake.getFirst().x, snake.getFirst().y);
-            switch(direction){
-                case "U":
-                    next.x--;  break;
-                case "L":
-                    next.y--; break;
-                case "R":
-                    next.y++;   break;
-                case "D":
-                    next.x++;   break;
+            switch (direction) {
+                case "U": next.x--;break;
+                case "D": next.x++;break;
+                case "L": next.y--;break;
+                default:  next.y++;
             }
-            // check if next is valid
             set.remove(snake.getLast());
-            if ( next.x < 0 || next.y < 0 || next.x >= row || next.y >= col || set.contains(next) ) return -1;
+            if ( next.x < 0 || next.y < 0 || next.x >= row || next.y >= col || set.contains(next)) {
+                return -1;
+            }
             snake.addFirst(next);
             set.add(next);
-            if ( foodIndex < food.length && food[foodIndex][0] == next.x && food[foodIndex][1] == next.y ) {
+            if ( foodIndex < food.length && food[foodIndex][0] == next.x && food[foodIndex][1] == next.y) {
+                set.add(snake.getLast());
                 foodIndex++;
             } else {
-                set.remove(snake.removeLast());
+                snake.removeLast();
             }
-            return foodIndex ;
+            return foodIndex;
         }
     }
 }
