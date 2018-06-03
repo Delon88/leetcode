@@ -2,9 +2,6 @@ package LC.SOL;
 
 import LC.DS.ListNode;
 
-/**
- * Created by nanhong on 11/27/2016.
- */
 public class PlusOneLinkedList {
     static class Solution {
         public ListNode plusOne(ListNode head) {
@@ -12,21 +9,23 @@ public class PlusOneLinkedList {
             dummy.next = head;
             ListNode i = dummy;
             ListNode j = dummy;
-            while ( j.next != null) {
+            // find least significant digits that is not 9
+            while ( j.next != null ) {
                 j = j.next;
-                if ( j.val != 9) {
+                if ( j.val != 9 ) {
                     i = j;
                 }
             }
-
+            // increment this digits
             i.val++;
             i = i.next;
-            while ( i != null) {
-                i.val = 0 ;
+            // set digits after to zero
+            while ( i != null ) {
+                i.val = 0;
                 i = i.next;
             }
-            if ( dummy.val != 0 ) return dummy;
-            else return dummy.next;
+            if ( dummy.val != 0  ) return dummy;
+            return dummy.next;
         }
     }
 }

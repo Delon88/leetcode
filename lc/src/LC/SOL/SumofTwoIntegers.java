@@ -1,8 +1,5 @@
 package LC.SOL;
 
-/**
- * Created by nanhong on 11/27/2016.
- */
 public class SumofTwoIntegers {
     public int getSum(int a, int b) {
         if ( a == 0 ) return b;

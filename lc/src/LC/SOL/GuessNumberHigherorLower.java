@@ -1,17 +1,14 @@
 package LC.SOL;
 
-/**
- * Created by nanhong on 11/27/2016.
- */
 public class GuessNumberHigherorLower {
     static class Solution extends GuessGame {
         public int guessNumber(int n) {
-            long start = 1, end = n;
-            while (start <= end) {
-                int mid = (int) ((start + end) / 2);
+            int start = 1 , end = n , mid = 0;
+            while ( start <= end ) {
+                mid = start + ( end - start ) / 2;
                 int guess = guess(mid);
-                if (guess == 0) return mid;
-                else if (guess == 1) start = mid + 1;
+                if ( guess == 0 ) return mid;
+                else if ( guess == 1 ) start = mid + 1;
                 else end = mid - 1;
             }
             return -1;

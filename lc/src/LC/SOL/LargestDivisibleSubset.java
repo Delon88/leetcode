@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by nanhong on 11/26/2016.
- */
 public class LargestDivisibleSubset {
     static class Solution {
         public List<Integer> largestDivisibleSubset(int[] nums) {
