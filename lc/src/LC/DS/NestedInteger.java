@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by nanhong on 12/11/2016.
  */
-public interface NestedInteger {
+public class NestedInteger {
     // Constructor initializes an empty nested list.
     public NestedInteger();
 

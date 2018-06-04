@@ -8,38 +8,30 @@ import java.util.Random;
  */
 public class ShuffleanArray {
     public class Solution {
-        private int[] nums;
-        private Random random;
-
+        int[] nums;
+        Random rn;
         public Solution(int[] nums) {
             this.nums = nums;
-            random = new Random();
+            rn= new Random();
         }
 
-        /**
-         * Resets the array to its original configuration and return it.
-         */
+        /** Resets the array to its original configuration and return it. */
         public int[] reset() {
             return nums;
         }
 
-        /**
-         * Returns a random shuffling of the array.
-         */
+        /** Returns a random shuffling of the array. */
         public int[] shuffle() {
-            if (nums == null) return null;
-            int[] a = nums.clone();
-            for (int j = 1; j < a.length; j++) {
-                int i = random.nextInt(j + 1);
-                swap(a, i, j);
+            if ( nums == null ) return null;
+            int[] copy = nums.clone();
+            int n = copy.length;
+            for ( int i = 0; i < n; i++) {
+                int r = i + (rn.nextInt(n - i));
+                int tmp = copy[i];
+                copy[i] = copy[r];
+                copy[r] = tmp;
             }
-            return a;
-        }
-
-        private void swap(int[] a, int i, int j) {
-            int t = a[i];
-            a[i] = a[j];
-            a[j] = t;
+            return copy;
         }
     }
 
