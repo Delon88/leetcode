@@ -3,9 +3,6 @@ package LC.SOL;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-/**
- * Created by nanhong on 12/12/2016.
- */
 public class LongestAbsoluteFilePath {
     public class Solution {
         public int lengthLongestPath(String input) {
