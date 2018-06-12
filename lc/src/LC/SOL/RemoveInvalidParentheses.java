@@ -58,6 +58,29 @@ public class RemoveInvalidParentheses {
             }
             return left == right;
         }
+        //  FB simple version: return just one
+//        public List<String> removeInvalidParentheses(String s) {
+//            String left = remove(s , new char[]{'(', ')'});
+//            String right = remove(new StringBuilder(left).reverse().toString(), new char[]{')', '('});
+//            return Arrays.asList(new StringBuilder(right).reverse().toString());
+//        }
+//
+//        String remove(String s,char[] p) {
+//            int count = 0;
+//            for ( int i = 0; i < s.length(); i++) {
+//                if ( s.charAt(i) == p[0]) {
+//                    count++;
+//                } else if ( s.charAt(i) == p[1]) {
+//                    count--;
+//                }
+//                if ( count < 0 ) {
+//                    s = s.substring(0, i ) + s.substring(i + 1);
+//                    i--;
+//                    count = 0;
+//                }
+//            }
+//            return s;
+//        }
 
     }
 }

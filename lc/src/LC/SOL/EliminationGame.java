@@ -3,7 +3,19 @@ package LC.SOL;
 public class EliminationGame {
     public class Solution {
         public int lastRemaining(int n) {
-            return n == 1 ? 1 : 2 * ( 1 + n / 2 - lastRemaining(n / 2));
+            boolean left = true;
+            int head = 1;
+            int step = 1;
+            int remaining = n;
+            while ( remaining > 1 ) {
+                if ( left || remaining % 2 == 1 ) {
+                    head = head + step;
+                }
+                remaining = remaining / 2;
+                step = step * 2;
+                left = !left;
+            }
+            return head;
         }
     }
 }

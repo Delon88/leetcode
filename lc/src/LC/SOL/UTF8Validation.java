@@ -1,8 +1,5 @@
 package LC.SOL;
 
-/**
- * Created by nanhong on 12/12/2016.
- */
 public class UTF8Validation {
     public class Solution {
         public boolean validUtf8(int[] data) {

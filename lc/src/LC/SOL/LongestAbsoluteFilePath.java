@@ -1,21 +1,19 @@
 package LC.SOL;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Stack;
 
 public class LongestAbsoluteFilePath {
     public class Solution {
         public int lengthLongestPath(String input) {
-            Deque<Integer> stack = new ArrayDeque<>();
+            Stack<Integer> stack = new Stack<>();
             stack.push(0); // "dummy" length
             int maxLen = 0;
-            for(String s:input.split("\n")){
-                int lev = s.lastIndexOf("\t")+1; // number of "\t"
-                while(lev+1<stack.size()) stack.pop(); // find parent
-                int len = stack.peek()+s.length()-lev+1; // remove "/t", add"/"
-                stack.push(len);
-                // check if it is file
-                if(s.contains(".")) maxLen = Math.max(maxLen, len-1);
+            for(String s: input.split("\n")) {
+                int numOfTabs = s.lastIndexOf("\t") + 1;
+                int level = numOfTabs + 1;
+                while ( level < stack.size() ) stack.pop();
+                int curLen = stack.peek() + s.length() - numOfTabs + 1;
+                if ( s.indexOf('.') != -1) maxLen = Math.max(maxLen , curLen);
             }
             return maxLen;
         }

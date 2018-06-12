@@ -3,46 +3,32 @@ package LC.SOL;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by nanhong on 12/12/2016.
- */
 public class PerfectRectangle {
     public class Solution {
         public boolean isRectangleCover(int[][] rectangles) {
-
-            if (rectangles.length == 0 || rectangles[0].length == 0) return false;
-
-            int x1 = Integer.MAX_VALUE;
-            int x2 = Integer.MIN_VALUE;
-            int y1 = Integer.MAX_VALUE;
-            int y2 = Integer.MIN_VALUE;
-
+            if (rectangles == null || rectangles.length == 0) return false;
+            int x1 = Integer.MAX_VALUE, x2 = Integer.MIN_VALUE;
+            int y1 = Integer.MAX_VALUE, y2 = Integer.MIN_VALUE;
             Set<String> set = new HashSet<>();
             int area = 0;
-
-            for (int[] rect : rectangles) {
-                x1 = Math.min(rect[0], x1);
-                y1 = Math.min(rect[1], y1);
-                x2 = Math.max(rect[2], x2);
-                y2 = Math.max(rect[3], y2);
-
-                area += (rect[2] - rect[0]) * (rect[3] - rect[1]);
-
-                String s1 = rect[0] + " " + rect[1];
-                String s2 = rect[0] + " " + rect[3];
-                String s3 = rect[2] + " " + rect[3];
-                String s4 = rect[2] + " " + rect[1];
-
+            for (int[] r : rectangles) {
+                x1 = Math.min(x1, r[0]);
+                y1 = Math.min(y1, r[1]);
+                x2 = Math.max(x2, r[2]);
+                y2 = Math.max(y2, r[3]);
+                area += (r[3] - r[1]) * (r[2] - r[0]);
+                String s1 = r[0] + "," + r[1];
+                String s2 = r[0] + "," + r[3];
+                String s3 = r[2] + "," + r[1];
+                String s4 = r[2] + "," + r[3];
                 if (!set.add(s1)) set.remove(s1);
                 if (!set.add(s2)) set.remove(s2);
                 if (!set.add(s3)) set.remove(s3);
                 if (!set.add(s4)) set.remove(s4);
             }
-
-            if (!set.contains(x1 + " " + y1) || !set.contains(x1 + " " + y2) || !set.contains(x2 + " " + y1) || !set.contains(x2 + " " + y2) || set.size() != 4)
-                return false;
-
-            return area == (x2 - x1) * (y2 - y1);
+            if (set.size() != 4 || !set.contains(x1 + "," + y1) || !set.contains(x1 + "," + y2) || !set.contains(x2 + "," + y1)
+                    || !set.contains(x2 + "," + y2)) return false;
+            return area == (y2 - y1) * (x2 - x1);
         }
     }
 }
