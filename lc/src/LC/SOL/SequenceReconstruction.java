@@ -1,48 +1,49 @@
 package LC.SOL;
 
-import java.util.List;
+import java.util.*;
 
 public class SequenceReconstruction {
     public class Solution {
         public boolean sequenceReconstruction(int[] org, List<List<Integer>> seqs) {
-
-            if (seqs.size() == 0) return false;
-
-            int[] idx = new int[org.length + 1];
-            for (int i = 0; i < org.length; i++) {
-                idx[org[i]] = i;
-            }
-
-            boolean[] pairs = new boolean[org.length];
-
+            Map<Integer,Set<Integer>> graph = new HashMap<>();
+            Map<Integer,Integer> indegree = new HashMap<>();
             for ( List<Integer> seq : seqs) {
-                for ( int i = 0 ; i < seq.size() ; i++) {
-                    // check for point range.
-                    if ( seq.get(i) < 0 || seq.get(i) > org.length ) {
-                        return false;
-                    }
+                if ( seq.size() == 1 ) {
+                    graph.putIfAbsent(seq.get(0), new HashSet<>());
+                    indegree.putIfAbsent(seq.get(0), 0);
+                } else {
+                    for ( int i = 0 ; i < seq.size() - 1; i++) {
+                        graph.putIfAbsent(seq.get(i), new HashSet<>());
+                        indegree.putIfAbsent(seq.get(i), 0);
 
-                    if ( i > 0 && idx[seq.get(i - 1)] >= idx[seq.get(i)] ) {
-                        return false;
-                    }
+                        graph.putIfAbsent(seq.get(i + 1) , new HashSet<>());
+                        indegree.putIfAbsent(seq.get(i + 1) , 0);
 
-                    if ( i > 0 &&  idx[seq.get(i - 1)] + 1 == idx[seq.get(i)] ) {
-                        pairs[idx[seq.get(i  - 1)] ] = true;
+                        if ( graph.get(seq.get(i)).add(seq.get(i + 1))) {
+                            indegree.put(seq.get(i + 1), indegree.getOrDefault(seq.get(i + 1), 0) + 1);
+                        }
                     }
                 }
             }
 
-            if ( pairs.length == 1 ) {
-                for ( List<Integer> seq : seqs) {
-                    if ( seq.size() == 1 ) return true;
-                }
-                return false;
+            Queue<Integer> q = new LinkedList<>();
+            for ( Map.Entry<Integer,Integer> d : indegree.entrySet()) {
+                if ( d.getValue() == 0 ) q.offer(d.getKey());
             }
 
-            for ( int i = 0  ; i < pairs.length - 1; i++) {
-                if ( !pairs[i] ) return false;
+            int index = 0;
+            while ( !q.isEmpty()) {
+                if ( q.size() > 1 ) {
+                    return false;
+                }
+                int node = q.poll();
+                if ( index == org.length || org[index++] != node ) return false;
+                for ( Integer nei: graph.get(node)) {
+                    indegree.put(nei, indegree.get(nei) - 1);
+                    if ( indegree.get(nei) == 0) q.offer(nei);
+                }
             }
-            return true;
+            return index == org.length && index == graph.size();
         }
 
     }

@@ -10,15 +10,13 @@ public class LongestPalindrome {
     public class Solution {
         public int longestPalindrome(String s) {
             Set<Character> set = new HashSet<>();
-            for (int i = 0; i < s.length(); i++) {
-                char c = s.charAt(i);
-                if (set.contains(c)) {
-                    set.remove(c);
-                } else {
-                    set.add(c);
+            int len = s.length();
+            for ( int i = 0 ; i < len ; i++) {
+                if ( !set.add(s.charAt(i))) {
+                    set.remove(s.charAt(i));
                 }
             }
-            return s.length() - (set.size() <= 1 ? 0: set.size() - 1);
+            return set.size() <= 1 ? len : len - set.size() + 1;
         }
     }
 }

@@ -6,26 +6,24 @@ package LC.SOL;
 public class ValidWordAbbreviation {
     public class Solution {
         public boolean validWordAbbreviation(String word, String abbr) {
-            int i = 0, j = 0;
-            while (i < abbr.length() && j < word.length()) {
-                char c = abbr.charAt(i);
-                if ( c == '0') return false;
-                if (Character.isDigit(c)) {
-                    int num = 0;
-                    while (i < abbr.length() && Character.isDigit(abbr.charAt(i))) {
-                        num = num * 10 + (abbr.charAt(i) - '0');
-                        i++;
-                    }
-                    j += num;
+            int i = 0 , j = 0 ;
+            while ( i < word.length() && j < abbr.length()) {
+                char w = word.charAt(i), a = abbr.charAt(j);
+                if ( w == a ) {
+                    i++;j++;continue;
+                }
+                if ( a == '0' || !Character.isDigit(a)) {
+                    return false;
                 } else {
-                    if (c == word.charAt(j)) {
-                        i++;j++;
-                    } else {
-                        return false;
+                    int num = 0;
+                    while ( j < abbr.length() && Character.isDigit(abbr.charAt(j))) {
+                        num = num * 10 + (abbr.charAt(j) - '0');
+                        j++;
                     }
+                    i += num;
                 }
             }
-            return j == word.length() && i == abbr.length();
+            return i == word.length() && j == abbr.length();
         }
     }
 }

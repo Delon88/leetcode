@@ -4,6 +4,38 @@ package LC.SOL;
 import java.util.*;
 
 public class EvaluateDivision {
+
+    public class DFSSolution {
+        public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
+            Map<String,Map<String,Double>> map = new HashMap<>();
+            for ( int i = 0 ; i < equations.length; i++) {
+                String[] e = equations[i];
+                map.putIfAbsent(e[0] , new HashMap<>());
+                map.putIfAbsent(e[1] , new HashMap<>());
+                map.get(e[0]).put(e[1], values[i]);
+                map.get(e[1]).put(e[0], 1.0d / values[i]);
+            }
+            double[] ret = new double[queries.length];
+            for ( int i = 0; i < queries.length ; i++) {
+                String[] q = queries[i];
+                ret[i] = dfs(q[0], q[1], 1, map, new HashSet<>());
+            }
+            return ret;
+        }
+
+        double dfs(String s, String t, double r, Map<String,Map<String,Double>> map, Set<String> v ) {
+            if ( !map.containsKey(s) || !v.add(s) ) return -1;
+
+            if ( s.equals(t)) return r;
+            Map<String,Double> next = map.get(s);
+            for ( String key : next.keySet()) {
+                double nextR = dfs(key, t, r * next.get(key), map, v);
+                if ( nextR != -1) return nextR;
+            }
+            return -1;
+        }
+    }
+
     public class Solution {
         public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
             Map<String, Map<String, Double>> map = new HashMap<>();

@@ -3,11 +3,8 @@ package LC.SOL;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by nanhong on 1/15/2017.
- */
 public class MinimumUniqueWordAbbreviation {
-    public class Solution {
+     static class Solution {
         // "apple", ["plain", "amber", "blade"] -> "1p3" (other valid answers include "ap3", "a3e", "2p2", "3le", "3l1").
         //          [          a4           4e]
         int n, cand, bn, minlen, minab;
@@ -41,7 +38,7 @@ public class MinimumUniqueWordAbbreviation {
             // No ? Then has to add more masks to cover all differences.
             else{
                 for(int b = bit; b < bn; b <<= 1){
-                    if((cand & b) != 0) dfs(b << 1, mask + b);
+                    if((cand & b) != 0) dfs(b << 1, mask | b);
                 }
             }
         }
@@ -75,5 +72,11 @@ public class MinimumUniqueWordAbbreviation {
 
             return res.toString();
         }
+    }
+
+    public static void main(String[] args) {
+        String target = "apple";
+        String[] dict = {"plain", "amber", "blade"};
+        new Solution().minAbbreviation(target, dict);
     }
 }
