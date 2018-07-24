@@ -5,37 +5,21 @@ import java.util.Arrays;
 public class MagicalString {
     static class Solution {
         public int magicalString(int n) {
-            if ( n == 0) return 0;
-            if (n <= 2) return 1;
-            int[] a = new int[n + 2];
-            a[0] = 1;
-            a[1] = 2;
-            a[2] = 2;
-            int i = 2, j = 2;
-            while (i < n) {
-                if (a[j] == 2) {
-                    if (a[i] == 2) {
-                        a[++i] = 1;
-                        a[++i] = 1;
-                    } else {
-                        a[++i] = 2;
-                        a[++i] = 2;
-                    }
-                    j++;
-                } else {
-                    if (a[i] == 2) {
-                        a[++i] = 1;
-                    } else {
-                        a[++i] = 2;
-                    }
-                    j++;
+            if ( n <= 0 ) return 0;
+            if ( n <= 3 ) return 1;
+            int[] arr = new int[n + 1];
+            arr[0] = 1; arr[1] = 2; arr[2] = 2;
+            int head = 2 , tail = 3, curNum = 1, ret = 1;
+            while ( tail < n ) {
+                for ( int i = 0 ; i < arr[head] ; i++) {
+                    arr[tail] = curNum;
+                    if ( curNum == 1 && tail < n ) ret++;
+                    tail++;
                 }
+                curNum = curNum ^ 3;
+                head++;
             }
-            int count = 0;
-            for (int k = 0; k < n; k++) {
-                if (a[k] == 1) count++;
-            }
-            return count;
+            return ret;
         }
     }
 

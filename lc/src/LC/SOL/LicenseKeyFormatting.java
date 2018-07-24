@@ -1,23 +1,23 @@
 package LC.SOL;
 
 public class LicenseKeyFormatting {
-    public class Solution {
+    class Solution {
         public String licenseKeyFormatting(String S, int K) {
             StringBuilder b = new StringBuilder();
-            int groupLen = 0;
-            for (int i = S.length() - 1; i >= 0; i--) {
-                if (S.charAt(i) != '-') {
-                    b.append(Character.toUpperCase(S.charAt(i)));
-                    groupLen++;
-                    if (groupLen == K) {
+            int count = 0;
+            for ( int i = S.length() - 1; i >= 0 ; i--) {
+                char c = S.charAt(i);
+                if ( c != '-') {
+                    count++;
+                    b.append(Character.toUpperCase(c));
+                    if ( count == K ) {
                         b.append('-');
-                        groupLen = 0;
+                        count = 0;
                     }
                 }
             }
-            if (b.length() > 0 && b.charAt(b.length() - 1) == '-') b.deleteCharAt(b.length() - 1);
-            b.reverse();
-            return b.toString();
+            if ( b.length() > 0 && b.charAt(b.length()- 1) == '-') b.deleteCharAt(b.length() - 1);
+            return b.reverse().toString();
         }
     }
 }
