@@ -1,21 +1,19 @@
 package LC.SOL;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class OutputContestMatches {
     class Solution {
         public String findContestMatch(int n) {
-            List<String> matches = new ArrayList<>();
-            for (int i = 1; i <= n; i++) matches.add(Integer.toString(i));
-            while (matches.size() != 1) {
-                List<String> newRound = new ArrayList<>();
-                for (int i = 0; i < matches.size() / 2; i++) {
-                    newRound.add("(" + matches.get(i) + "," + matches.get(matches.size() - i - 1) + ")");
-                }
-                matches = newRound;
+            String[] m = new String[n];
+            for ( int i = 0 ; i < n ; i++) {
+                m[i] = String.valueOf(i + 1);
             }
-            return matches.get(0);
+            while ( n > 1 ) {
+                for ( int i = 0 ; i < n / 2; i++) {
+                    m[i] = "(" + m[i] + "," + m[n - i - 1] + ")";
+                }
+                n /= 2;
+            }
+            return m[0];
         }
     }
 }
