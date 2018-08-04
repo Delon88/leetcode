@@ -13,9 +13,6 @@ public class LongestHarmoniousSubsequence {
 
             int maxLen = 0;
             for (Integer n : map.keySet()) {
-                if (map.containsKey(n - 1)) {
-                    maxLen = Math.max(map.get(n) + map.get(n - 1), maxLen);
-                }
                 if (map.containsKey(n + 1)) {
                     maxLen = Math.max(map.get(n) + map.get(n + 1), maxLen);
                 }

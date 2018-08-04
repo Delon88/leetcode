@@ -9,39 +9,39 @@ public class ErecttheFence {
     static class Solution {
         public List<Point> outerTrees(Point[] points) {
             Set<Point> set = new HashSet<>();
-            Point leftMost = points[0];
-            for (Point p : points) {
-                if (p.x < leftMost.x) {
-                    leftMost = p;
+            Point first = points[0];
+            for ( int i = 1 ; i < points.length ; i++) {
+                if ( points[i].x < first.x) {
+                    first = points[i];
                 }
             }
-            set.add(leftMost);
-            Point cur = leftMost;
+            Point cur = first;
+            set.add(first);
             do {
                 Point nextPoint = points[0];
-                for (Point p : points) {
-                    if (p == cur) continue;
-                    int cross = crossProduct(cur, nextPoint, p);
-                    if (cross > 0 || cur == nextPoint || (cross == 0 && distance(cur, p) > distance(nextPoint, p))) {
+                for ( Point p : points) {
+                    if ( p == cur ) continue;
+                    int cross = crossProduct(nextPoint, cur, p );
+                    if ( cross > 0  || (cross == 0  && dist(cur, nextPoint) < dist(cur , p) )) {
                         nextPoint = p;
                     }
                 }
-                for (Point p : points) {
-                    if (p == cur) continue;
-                    int cross = crossProduct(cur, nextPoint, p);
-                    if (cross == 0) set.add(p);
+                // add all colinear points
+                for ( Point p : points) {
+                    if ( p == cur ) continue;
+                    if ( crossProduct(nextPoint, cur, p) == 0) set.add(p);
                 }
                 cur = nextPoint;
-            } while (cur != leftMost);
+            } while ( cur != first );
             return new ArrayList<>(set);
         }
 
-        private int crossProduct(Point A, Point B, Point C) {
-            return ((A.x - B.x) * (C.y - B.y) - (C.x - B.x) * (A.y - B.y));
+        int crossProduct(Point p1, Point p2, Point p3 ) {
+            return (p1.x - p2.x) * ( p3.y - p2.y) - ( p3.x - p2.x) * ( p1.y - p2.y);
         }
 
-        private int distance(Point p1, Point p2) {
-            return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
+        int dist(Point p1, Point p2) {
+            return ( p1.x - p2.x) * ( p1.x - p2.x)  + ( p1.y - p2.y) * ( p1.y - p2.y);
         }
 
         class Point {

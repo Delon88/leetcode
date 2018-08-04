@@ -8,49 +8,30 @@ import java.util.Queue;
 public class AddOneRowtoTree {
     class Solution {
         public TreeNode addOneRow(TreeNode root, int v, int d) {
-            if (root == null || d <= 0) return root;
+            if ( root == null || d < 0 ) return root;
             if ( d == 1 ) {
-                TreeNode newRoot = new TreeNode(v);
-                newRoot.left = root;
-                return newRoot;
+                TreeNode node = new TreeNode(v);
+                node.left = root;
+                return node;
             }
             Queue<TreeNode> q = new LinkedList<>();
-            int level = 1;
             q.offer(root);
-            while (!q.isEmpty() && level != d) {
+            for ( int i = 1; i < d - 1 ; i++) {
                 int size = q.size();
-                for (int i = 0; i < size; i++) {
+                for ( int j = 0 ; j < size ; j++) {
                     TreeNode node = q.poll();
-                    if (node.left != null) {
-                        q.offer(node.left);
-                    }
-
-                    if (node.right != null) {
-                        q.offer(node.right);
-                    }
-
-                    if (level == d - 1) {
-                        if (node.left != null) {
-                            TreeNode tmp = node.left;
-                            node.left = new TreeNode(v);
-                            node.left.left = tmp;
-                        } else {
-                            node.left = new TreeNode(v);
-                        }
-                    }
-
-                    if (level == d - 1) {
-                        if (node.right != null) {
-                            TreeNode tmp = node.right;
-                            node.right = new TreeNode(v);
-                            node.right.right = tmp;
-                        } else {
-                            node.right = new TreeNode(v);
-                        }
-                    }
-
+                    if ( node.left != null) q.offer(node.left);
+                    if ( node.right != null) q.offer(node.right);
                 }
-                level++;
+            }
+            while ( !q.isEmpty()) {
+                TreeNode node = q.poll();
+                TreeNode t = node.left;
+                node.left = new TreeNode(v);
+                node.left.left = t;
+                t = node.right;
+                node.right = new TreeNode(v);
+                node.right.right = t;
             }
             return root;
         }
