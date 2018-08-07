@@ -3,48 +3,45 @@ package LC.SOL;
 import java.util.*;
 
 public class SmallestRange {
+
     class Solution {
 
-
-//        You have k lists of sorted integers in ascending order. Find the smallest range that includes
-//        at least one number from each of the k lists.
-//
-//        We define the range [a,b] is smaller than range [c,d] if b-a < d-c or a < c if b-a == d-c.
-//        Input:[[4,10,15,24,26], [0,9,12,20], [5,18,22,30]]
-//        Output: [20,24]
-//        Explanation:
-//        List 1: [4, 10, 15, 24,26], 24 is in range [20,24].
-//        List 2: [0, 9, 12, 20], 20 is in range [20,24].
-//        List 3: [5, 18, 22, 30], 22 is in range [20,24].
-
         public int[] smallestRange(List<List<Integer>> nums) {
-            PriorityQueue<Map.Entry<Integer, Iterator<Integer>>> pq = new PriorityQueue<>((a, b) -> a.getKey() - b.getKey());
-
+            PriorityQueue<Ele> q = new PriorityQueue<>((a, b) -> a.val - b.val);
             int max = Integer.MIN_VALUE;
-            for (List<Integer> list : nums) {
-                if (list == null || list.size() == 0) return null;
-                max = Math.max(max, list.get(0));
-                pq.add(new AbstractMap.SimpleEntry<>(list.get(0), list.iterator()));
+            for (int i = 0; i < nums.size(); i++) {
+                List<Integer> num = nums.get(i);
+                q.offer(new Ele(num.get(0), i, 0));
+                max = Math.max(max, num.get(0));
             }
-
-            int minRange = Integer.MAX_VALUE;
-            int start = Integer.MAX_VALUE;
-
-            while (pq.size() == nums.size()) {
-                if (max - pq.peek().getKey() < minRange) {
-                    minRange = max - pq.peek().getKey();
-                    start = pq.peek().getKey();
+            int start = 0, end = Integer.MAX_VALUE;
+            while (q.size() == nums.size()) {
+                Ele e = q.poll();
+                if (max - e.val < end - start) {
+                    start = e.val;
+                    end = max;
                 }
-                Map.Entry<Integer, Iterator<Integer>> entry = pq.poll();
-                if (entry.getValue().hasNext()) {
-                    int nextVal = entry.getValue().next();
-                    max = Math.max(nextVal, max);
-                    pq.add(new AbstractMap.SimpleEntry<>(nextVal, entry.getValue()));
-                } else {
-                    break;
+                if (e.index + 1 < nums.get(e.row).size()) {
+                    int nextVal = nums.get(e.row).get(e.index + 1);
+                    q.offer(new Ele(nextVal, e.row, e.index + 1));
+                    if (nextVal > max) {
+                        max = nextVal;
+                    }
                 }
             }
-            return new int[]{start, start + minRange};
+            return new int[]{start, end};
+        }
+
+        class Ele {
+            int val;
+            int row;
+            int index;
+
+            public Ele(int val, int row, int index) {
+                this.val = val;
+                this.row = row;
+                this.index = index;
+            }
         }
     }
 }

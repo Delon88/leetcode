@@ -1,61 +1,39 @@
 package LC.SOL;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ShoppingOffers {
     class Solution {
 
-        int min = Integer.MAX_VALUE;
-
-        List<Integer> price = null;
-
-        List<List<Integer>> special = null;
-
         public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
-            this.price = price;
-            this.special = special;
-            int[] have = new int[needs.size()];
-            int[] ne = new int[needs.size()];
-            for (int i = 0; i < needs.size(); i++) {
-                ne[i] = needs.get(i);
-            }
-            dfs(0, have, ne);
-            return min;
+            return dfs(price, special, needs, 0);
         }
 
-        void dfs(int spent, int[] have, int[] needs) {
-            for (int i = 0; i < have.length; i++) {
-                if (have[i] > needs[i]) {
-                    return;
+        int dfs(List<Integer> price, List<List<Integer>> spec, List<Integer> need, int pos) {
+            int ret = directBuy(price, need);
+            for ( int i = pos ; i < spec.size() ; i++) {
+                List<Integer> offer = spec.get(i);
+                List<Integer> nextNeed = new ArrayList<>();
+                for ( int j = 0 ; j < need.size() ; j++) {
+                    if ( need.get(j) <  offer.get(j) ) {
+                        nextNeed = null;
+                        break;
+                    }
+                    nextNeed.add(need.get(j) - offer.get(j));
+                }
+                if ( nextNeed != null ) {
+                    ret = Math.min(ret, offer.get(offer.size() - 1) + dfs(price, spec, nextNeed, i) );
                 }
             }
-            if (Arrays.equals(have, needs)) {
-                min = Math.min(min, spent);
-            }
-            // do not use deal, calculate the rest
-            int rest = costForNonDeal(have, needs);
-            min = Math.min(spent + rest, min);
-
-            // use the deal,
-            for (int i = 0; i < special.size(); i++) {
-                List<Integer> deal = special.get(i);
-                for (int j = 0; j < deal.size() - 1; j++) {
-                    have[j] += deal.get(j);
-                }
-                dfs(spent + deal.get(deal.size() - 1), have, needs);
-                for (int j = 0; j < deal.size() - 1; j++) {
-                    have[j] -= deal.get(j);
-                }
-            }
-
-
+            return ret;
         }
 
-        int costForNonDeal(int[] have, int[] need) {
+        int directBuy(List<Integer> price, List<Integer> need) {
             int sum = 0;
-            for (int i = 0; i < have.length; i++) {
-                sum += (need[i] - have[i]) * price.get(i);
+            for ( int i = 0  ; i < price.size() ; i++) {
+                sum += price.get(i) * need.get(i);
             }
             return sum;
         }
