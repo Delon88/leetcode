@@ -5,27 +5,21 @@ import LC.DS.TreeNode;
 public class LongestUnivaluePath {
     class Solution {
 
-        int max = 0;
-
+        int maxLen;
         public int longestUnivaluePath(TreeNode root) {
-            solve(root);
-            return max;
+            if ( root == null ) return 0;
+            maxLen = 0;
+            solve(root,  root.val);
+            return maxLen;
         }
 
-        private int[] solve(TreeNode node) {
-            if (node == null) return new int[]{0, 0};
-            int[] left = solve(node.left);
-            int[] right = solve(node.right);
-            int count = 0;
-
-            if (left[1] != 0 && left[0] == node.val) {count += left[1];}
-            if (right[1] != 0 && right[0] == node.val) {count += right[1];}
-            max = Math.max(max, count);
-
-            int[] ret = {node.val, 1};
-            if (left[1] != 0 && left[0] == node.val) ret[1] += left[1];
-            if (right[1] != 0 && right[0] == node.val) ret[1] = Math.max(ret[1] , right[1]+ 1);
-            return ret;
+        int solve(TreeNode node, int parentVal) {
+            if ( node == null) return 0;
+            int left = solve(node.left, node.val);
+            int right = solve(node.right, node.val);
+            maxLen = Math.max(maxLen, left + right);
+            if ( parentVal == node.val) return Math.max(left ,right) + 1;
+            return 0;
         }
     }
 }

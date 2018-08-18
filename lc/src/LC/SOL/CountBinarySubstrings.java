@@ -3,22 +3,14 @@ package LC.SOL;
 public class CountBinarySubstrings {
     class Solution {
         public int countBinarySubstrings(String s) {
-            int zeroes = 0, ones = 0;
-            int i = 0;
-            int ret = 0;
-            while (i < s.length()) {
-                char c = s.charAt(i);
-                if (c == '0') {
-                    int count = 0;
-                    while (i < s.length() && s.charAt(i) == '0') {count++;i++;}
-                    zeroes = count;
-                    ret += Math.min(ones, zeroes);
-                } else {
-                    int count = 0;
-                    while (i < s.length() && s.charAt(i) == '1') {count++;i++;}
-                    ones = count;
-                    ret += Math.min(ones, zeroes);
+            int ret = 0, curLen = 1, prevLen = 0;
+            for ( int i = 1 ; i  < s.length() ; i++) {
+                if ( s.charAt(i) == s.charAt(i - 1)) { curLen++;}
+                else {
+                    prevLen = curLen;
+                    curLen = 1;
                 }
+                if ( prevLen >= curLen ) ret++;
             }
             return ret;
         }

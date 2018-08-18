@@ -36,12 +36,16 @@ public class IPtoCIDR {
             ret[2] = (int) (ip & 255);
             ip >>= 8;
             ret[3] = (int) (ip & 255);
-            int len = 33;
+            int len = 32;
             while ( firstOne > 0 ) {
                 firstOne >>= 1;
                 len--;
             }
-            return ret[3] + "." + ret[2] + "." + ret[1] + "." + ret[0] + "/" + len;
+            return ret[3] + "." + ret[2] + "." + ret[1] + "." + ret[0] + "/" + (len + 1);
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println((6 & -6));
     }
 }

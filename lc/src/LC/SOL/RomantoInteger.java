@@ -19,18 +19,17 @@ public class RomantoInteger {
         }
 
         public int romanToInt(String s) {
-            int sum = 0;
-            int i = s.length() - 1;
-            while (i > 0) {
-                if (base.get(s.charAt(i)) <= base.get(s.charAt(i - 1))) {
-                    sum += base.get(s.charAt(i));
-                    i--;
+            if (s == null || s.length() == 0) return 0;
+            int sum = base.get(s.charAt(s.length() - 1));
+            for ( int i = s.length() - 2 ; i >= 0  ; i--) {
+                int first = base.get(s.charAt(i));
+                int second = base.get(s.charAt(i + 1));
+                if ( first < second) {
+                    sum -= first;
                 } else {
-                    sum += base.get(s.charAt(i)) - base.get(s.charAt(i - 1));
-                    i -= 2;
+                    sum += first;
                 }
             }
-            if ( i == 0 ) sum += base.get(s.charAt(i));
             return sum;
         }
     }

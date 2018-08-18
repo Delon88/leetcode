@@ -1,5 +1,7 @@
 package LC.SOL;
 
+import java.util.Arrays;
+
 public class ShortestCompletingWord {
     class Solution {
         public String shortestCompletingWord(String licensePlate, String[] words) {
@@ -14,8 +16,7 @@ public class ShortestCompletingWord {
             int minLen = Integer.MAX_VALUE;
             String ret = "";
             for (String w : words) {
-                int[] clone = new int[26];
-                System.arraycopy(hash, 0, clone, 0, hash.length);
+                int[] clone = Arrays.copyOf(hash, hash.length);
                 if (contains(clone, w, count) && w.length() < minLen) {
                     minLen = w.length();
                     ret = w;

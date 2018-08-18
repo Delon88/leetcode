@@ -3,18 +3,14 @@ package LC.SOL;
 public class SubarrayProductLessThanK {
     class Solution {
         public int numSubarrayProductLessThanK(int[] nums, int k) {
-            long mul = 1l;
-            int start = 0;
-            int end = 0 ;
-            int count = 0;
-            while ( end < nums.length) {
-                mul *= nums[end];
-                while ( start <= end && mul >= k ) {
-                    mul /= nums[start];
-                    start++;
+            if ( k == 0 ) return 0;
+            int pro = 1,  count = 0;
+            for ( int i = 0 , j = 0 ; j < nums.length; j++) {
+                pro *= nums[j];
+                while ( i <= j && pro >= k ) {
+                    pro /= nums[i++];
                 }
-                count +=  end - start + 1;
-                end++;
+                count += j - i + 1;
             }
             return count;
         }

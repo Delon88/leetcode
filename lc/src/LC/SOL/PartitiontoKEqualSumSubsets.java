@@ -4,20 +4,22 @@ public class PartitiontoKEqualSumSubsets {
     class Solution {
         public boolean canPartitionKSubsets(int[] nums, int k) {
             int sum = 0;
-            for ( int n : nums) sum+= n;
-            if ( k <= 0 || sum % k != 0 ) return false;
-            return canPartion(nums, new boolean[nums.length], k , 0 , 0 , 0,  sum / k);
+            for ( int num : nums ) {
+                sum += num;
+            }
+            if ( sum % k  != 0 ) return false;
+            boolean[] used = new boolean[nums.length];
+            return dfs(nums, used, 0 , k , 0 , sum / k  );
         }
 
-        boolean canPartion(int[] nums, boolean[] v, int k, int start, int curSum, int numCount, int target) {
-            if (k == 1) return true;
-            if (target == curSum && numCount > 0) return canPartion(nums, v, k - 1, 0, 0, 0, target);
-            for ( int i = start ; i < nums.length ; i++) {
-                if ( !v[i] ) {
-                    v[i]  = true;
-                    numCount++;
-                    if ( canPartion(nums, v , k , i + 1 , curSum + nums[i] , numCount, target )) return true;
-                    v[i] = false;
+        boolean dfs(int[] nums, boolean[] used, int start, int k, int curSum, int target) {
+            if ( k == 1 ) return true;
+            if ( curSum == target ) { return dfs(nums, used, 0,  k -1, 0, target );}
+            for ( int i = start ; i < nums.length; i++ ) {
+                if ( !used[i] ) {
+                    used[i] = true;
+                    if ( dfs( nums, used, i + 1 , k , curSum + nums[i], target)) return true;
+                    used[i] = false;
                 }
             }
             return false;

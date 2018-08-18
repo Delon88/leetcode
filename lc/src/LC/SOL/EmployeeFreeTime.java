@@ -23,14 +23,13 @@ public class EmployeeFreeTime {
             }
             Collections.sort(list, (a, b) -> a.start - b.start);
             Interval tmp = list.get(0);
-            int min = tmp.start, max = tmp.end;
-            for (Interval in : list) {
-                if (in.start > tmp.end) {
+            for ( int i = 1 ; i < list.size() ; i++) {
+                Interval in =  list.get(i);
+                if ( in.start > tmp.end ) {
                     free.add(new Interval(tmp.end, in.start));
-                    tmp.start = in.start;
-                    tmp.end = in.end;
+                    tmp = in;
                 } else {
-                    tmp.end = Math.max(in.end , tmp.end);
+                    tmp.end = Math.max(in.end, tmp.end);
                 }
             }
             return free;

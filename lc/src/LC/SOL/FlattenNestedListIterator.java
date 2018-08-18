@@ -12,37 +12,26 @@ public class FlattenNestedListIterator {
 
         Stack<Iterator<NestedInteger>> stack;
 
-        Integer next;
+        NestedInteger next;
 
         public NestedIterator(List<NestedInteger> nestedList) {
             stack = new Stack<>();
             stack.push(nestedList.iterator());
-            next();
         }
 
         @Override
         public Integer next() {
-            Integer ret = next;
-            while ( !stack.isEmpty()) {
-                if ( !stack.peek().hasNext()) {
-                    stack.pop();
-                } else {
-                    NestedInteger n = stack.peek().next();
-                    if ( n.isInteger()) {
-                        next = n.getInteger();
-                        break;
-                    } else {
-                        stack.push(n.getList().iterator());
-                    }
-                }
-            }
-            if ( stack.isEmpty()) next = null;
-            return ret;
+            return next != null ? next.getInteger() : null;
         }
 
         @Override
         public boolean hasNext() {
-            return next != null;
+            while ( !stack.isEmpty()) {
+                if ( !stack.peek().hasNext()) stack.pop();
+                else if ( (next = stack.peek().next()).isInteger()) return true;
+                else { stack.push(next.getList().iterator()) ;}
+            }
+            return false;
         }
     }
 }

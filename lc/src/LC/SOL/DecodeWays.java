@@ -21,4 +21,18 @@ public class DecodeWays {
             return dp[0];
         }
     }
+
+    class SolutionO1 {
+        public int numDecodings(String s) {
+            int f0 = 1, f1 = 0, f2 = 0;
+            for ( int i = 0 ; i < s.length() ; i++) {
+                char c = s.charAt(i);
+                int e0 = ( c == '0' ? 0 : f0) + f1 + ( c >= '0' && c <= '6' ? f2 : 0);
+                int e1 = ( c == '1' ? f0 : 0);
+                int e2 = ( c == '2' ? f0 : 0);
+                f0 = e0; f1 = e1; f2 = e2;
+            }
+            return f0;
+        }
+    }
 }

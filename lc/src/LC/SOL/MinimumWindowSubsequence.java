@@ -1,5 +1,7 @@
 package LC.SOL;
 
+import java.util.Arrays;
+
 public class MinimumWindowSubsequence {
     class Solution {
         public String minWindow(String S, String T) {

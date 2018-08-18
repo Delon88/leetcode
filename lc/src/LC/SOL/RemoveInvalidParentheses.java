@@ -83,4 +83,27 @@ public class RemoveInvalidParentheses {
 //        }
 
     }
+
+    class SolutionFB {
+        public List<String> removeInvalidParentheses(String s) {
+            char[] a = s.toCharArray();
+            int left = 0 , right = 0;
+            List<String> ret = new ArrayList<>();
+            for ( int i = 0  ;  i < a.length ; i++) {
+                if ( a[i] == '(') left++;
+                else if ( a[i] == ')') right++;
+                if ( right > left) { a[i] = '\t'; right--;}
+            }
+            if ( left == right) {ret.add(new String(a).replaceAll("\t" , ""));return ret;}
+            left = 0; right = 0;
+            for ( int i = a.length - 1; i >= 0 ; i--) {
+                if ( a[i] == ')') right++;
+                else if ( a[i] == '(') left++;
+                if ( left > right ) { a[i] = '\t'; left--;}
+            }
+            if ( left == right ) { ret.add(new String(a).replaceAll("\t", "")); return ret;}
+            return ret;
+        }
+    }
+
 }

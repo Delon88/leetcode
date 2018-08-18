@@ -16,9 +16,9 @@ public class SentenceSimilarity {
             }
 
             for (int i = 0; i < words1.length; i++) {
-                if (!words1[i].equals(words2[i]) &&
-                        (!map.containsKey(words1[i]) || !map.get(words1[i]).contains(words2[i]))
-                        && (!map.containsKey(words2[i]) || !map.get(words2[i]).contains(words1[i]))) {
+                if (!(words1[i].equals(words2[i])
+                        || (map.containsKey(words1[i]) && map.get(words1[i]).contains(words2[i]))
+                        || (map.containsKey(words2[i]) && map.get(words2[i]).contains(words1[i])))) {
                     return false;
                 }
             }

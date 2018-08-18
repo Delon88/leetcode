@@ -12,7 +12,7 @@ public class PrefixandSuffixSearch {
             for (int i = 0; i < words.length; i++) {
                 for (int m = 0; m <= words[i].length(); m++) {
                     for (int n = 0; n <= words[i].length(); n++) {
-                        map.put(words[i].substring(0, m) + "#" + words[i].substring(words[i].length() - n, words[i].length()), i);
+                        map.put(words[i].substring(0, m) + "#" + words[i].substring(words[i].length() - n), i);
                     }
                 }
             }
@@ -23,9 +23,4 @@ public class PrefixandSuffixSearch {
         }
     }
 
-/**
- * Your WordFilter object will be instantiated and called as such:
- * WordFilter obj = new WordFilter(words);
- * int param_1 = obj.f(prefix,suffix);
- */
 }

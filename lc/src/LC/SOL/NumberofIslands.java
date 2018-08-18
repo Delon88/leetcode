@@ -9,7 +9,6 @@ public class NumberofIslands {
             int count = 0;
             if (grid == null || grid.length == 0) return 0;
             int m = grid.length, n = grid[0].length;
-            boolean[][] v = new boolean[m][n];
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
                     if (grid[i][j] == '1') {
