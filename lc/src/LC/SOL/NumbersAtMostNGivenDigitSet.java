@@ -11,16 +11,17 @@ public class NumbersAtMostNGivenDigitSet {
             for (int i = K - 1; i >= 0; i--) {
                 int curD = S.charAt(i) - '0';
                 for (String d : D) {
-                    if ( curD > Integer.valueOf(d)) {
-                        dp[i] += Math.pow(D.length, K - 1 - i);
-                    } else if ( curD == Integer.valueOf(d)) {
+                    int digit = Integer.valueOf(d);
+                    if ( curD > digit) {
+                        dp[i] += Math.pow(D.length, K - i - 1);
+                    } else if ( curD == digit) {
                         dp[i] += dp[i + 1];
                     }
                 }
             }
             int ret = dp[0];
             for ( int i = 1 ; i < K ; i++) {
-                ret += Math.pow(D.length, i);
+                ret+= Math.pow(D.length, i);
             }
             return ret;
         }
