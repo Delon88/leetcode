@@ -11,6 +11,7 @@ public class SmallestRangeI {
             int diff = max - min;
             int ret = diff > 2 * K ? diff - 2 * K : 0;
             return ret;
+            
         }
     }
 }
