@@ -45,17 +45,17 @@ public class TheMazeIII {
                 }
                 while (!q.isEmpty()) {
                     Node node = q.poll();
-                    if ( nodes[node.x][node.y].compareTo(node) <= 0 ) continue;
+                    if (nodes[node.x][node.y].compareTo(node) <= 0) continue;
                     nodes[node.x][node.y] = node;
                     for (int[] d : dirs) {
                         int x = node.x, y = node.y;
                         int dist = 0;
-                        while (x >= 0 && x  < m && y  >= 0 && y < n && maze[x][y] == 0 && (x != hole[0] || y != hole[1]) ) {
+                        while (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == 0 && (x != hole[0] || y != hole[1])) {
                             dist++;
                             x = x + d[0];
                             y = y + d[1];
                         }
-                        if ( x != hole[0] || y != hole[1]) {
+                        if (x != hole[0] || y != hole[1]) {
                             x -= d[0];
                             y -= d[1];
                             dist--;
@@ -66,5 +66,5 @@ public class TheMazeIII {
                 return nodes[hole[0]][hole[1]].dist == Integer.MAX_VALUE ? "impossible" : nodes[hole[0]][hole[1]].path;
             }
         }
-
+    }
 }
