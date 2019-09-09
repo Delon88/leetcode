@@ -13,17 +13,14 @@ public class LongestSubstringwithAtMostTwoDistinctCharacters {
             for (  ; end < s.length() ; end++) {
                 char c = s.charAt(end);
                 map.put(c, map.getOrDefault(c , 0) + 1);
-                if ( map.size() > 2) {
-                    max = Math.max(end - start , max);
-                    while ( map.size() > 2) {
-                        char startChar = s.charAt(start);
-                        map.put(startChar, map.get(startChar) - 1);
-                        if ( map.get(startChar) <= 0) { map.remove(startChar);}
-                        start++;
-                    }
+                while ( map.size() > 2) {
+                    char startChar = s.charAt(start);
+                    map.put(startChar, map.get(startChar) - 1);
+                    if ( map.get(startChar) <= 0) { map.remove(startChar);}
+                    start++;
                 }
+                max = Math.max(end - start + 1 , max);
             }
-            max = Math.max( end - start , max);
             return max;
         }
     }
