@@ -7,7 +7,6 @@ public class GenerateParentheses {
     class Solution {
         public List<String> generateParenthesis(int n) {
             List<String> ret = new ArrayList<>();
-            if ( n <= 0) return ret;
             char[] tmp = new char[2 * n];
             generate(tmp, 0 , 0 , ret , n);
             return ret;

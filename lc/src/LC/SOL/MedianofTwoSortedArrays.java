@@ -12,7 +12,7 @@ public class MedianofTwoSortedArrays {
             while (imin <= imax) {
                 i = (imin + imax) / 2;
                 j = (m + n + 1) / 2 - i;
-                if (j > 0 && i < m && nums1[i] < nums2[j -1]) {
+                if (j > 0 && i < m && nums2[j - 1] > nums1[i]) {
                     imin = i + 1;
                 } else if (i > 0 && j < n && nums1[i - 1] > nums2[j]) {
                     imax = i - 1;
@@ -34,7 +34,5 @@ public class MedianofTwoSortedArrays {
 
             return ( maxLeft + minRight) / 2.0d;
         }
-
-
     }
 }
