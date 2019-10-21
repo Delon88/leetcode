@@ -10,21 +10,21 @@ public class CombinationSumII {
             List<List<Integer>> ret = new ArrayList<>();
             if (candidates == null || candidates.length == 0) return ret;
             Arrays.sort(candidates);
-            dfs(candidates, target, 0 , 0 , new ArrayList<>() ,ret);
+            dfs(candidates, target, 0, new ArrayList<>(), ret);
             return ret;
         }
 
-        void dfs(int[] cands, int target, int sum, int start, List<Integer> tmp, List<List<Integer>> ret) {
-            if (sum > target) return;
-            if (sum == target) {
+        void dfs(int[] cands, int remain, int start, List<Integer> tmp, List<List<Integer>> ret) {
+            if (remain < 0) return;
+            if (0 == remain) {
                 ret.add(new ArrayList<>(tmp));
                 return;
             }
             for (int i = start; i < cands.length; i++) {
                 tmp.add(cands[i]);
-                dfs(cands, target, sum + cands[i], i + 1,  tmp, ret);
-                tmp.remove(tmp.size()  -1);
-                while ( i < cands.length - 1 && cands[i] == cands[i + 1]) {
+                dfs(cands, remain - cands[i], i + 1, tmp, ret);
+                tmp.remove(tmp.size() - 1);
+                while (i < cands.length - 1 && cands[i] == cands[i + 1]) {
                     i++;
                 }
             }

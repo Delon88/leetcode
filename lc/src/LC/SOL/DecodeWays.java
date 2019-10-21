@@ -12,7 +12,7 @@ public class DecodeWays {
                 if (c == '0') {
                     dp[i] = 0;
                 } else {
-                    dp[i] += dp[i + 1];
+                    dp[i] = dp[i + 1];
                     if ( c == '1' || ( c == '2' && s.charAt(i + 1) <= '6')) {
                         dp[i] += dp[i + 2];
                     }

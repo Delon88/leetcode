@@ -10,7 +10,7 @@ public class GroupAnagrams {
                 char[] a = str.toCharArray();
                 Arrays.sort(a);
                 String ana = new String(a);
-                if ( !map.containsKey(ana)) {map.put(ana, new ArrayList<>());}
+                map.putIfAbsent(ana, new ArrayList<>());
                 map.get(ana).add(str);
             }
 

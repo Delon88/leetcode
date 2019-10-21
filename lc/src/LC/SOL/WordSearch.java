@@ -21,7 +21,6 @@ public class WordSearch {
             for ( int[] d : dirs) {
                 int nextX = x + d[0], nextY = y + d[1];
                 if ( dfs(board, v, word, nextX , nextY, level + 1)) {
-                    v[x][y] = false;
                     return true;
                 }
             }

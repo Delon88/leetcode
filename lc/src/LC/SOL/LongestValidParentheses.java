@@ -10,7 +10,7 @@ public class LongestValidParentheses {
             for ( int i = 0 ; i < s.length() ; i++) {
                 char c = s.charAt(i);
                 if ( c == ')' && !stack.isEmpty() && s.charAt(stack.peek()) == '(' ) {
-                    int left = stack.pop();
+                    stack.pop();
                     if ( stack.isEmpty()) { max = i + 1 ;}
                     else {
                         max = Math.max( i - stack.peek() , max);

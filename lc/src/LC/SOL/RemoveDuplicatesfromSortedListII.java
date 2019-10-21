@@ -18,11 +18,10 @@ public class RemoveDuplicatesfromSortedListII {
                 }
                 if ( count > 1  ) {
                     prev.next = node;
-                    cur = node;
                 } else {
                     prev = cur;
-                    cur = node;
                 }
+                cur = node;
             }
             return dummyHead.next;
         }

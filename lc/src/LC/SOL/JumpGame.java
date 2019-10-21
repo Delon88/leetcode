@@ -5,7 +5,7 @@ public class JumpGame {
         public boolean canJump(int[] nums) {
             int i = 0;
             int reach = 0;
-            for ( ; i < nums.length && i <= reach ; i++) {
+            for ( ; i < nums.length && reach >= i ; i++) {
                 reach = Math.max(reach, nums[i] + i );
             }
             return i == nums.length;

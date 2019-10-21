@@ -28,16 +28,13 @@ public class MaximalRectangle {
 
         public int largestRectangleArea(int[] heights) {
             Stack<Integer> stack = new Stack<>();
-            int[] h = Arrays.copyOf(heights, heights.length + 1);
-            int i = 0 ;
             int max = 0;
-            while ( i < h.length ) {
-                if ( stack.isEmpty() || h[stack.peek()] <= h[i]) {
-                    stack.push(i);
-                    i++;
-                } else {
+            for ( int i = 0  ;i <= heights.length ;) {
+                int h = i == heights.length ? 0: heights[i];
+                if ( stack.isEmpty() || h >= heights[stack.peek()]) {stack.push(i); i++;}
+                else {
                     int j = stack.pop();
-                    max = Math.max(max, h[j] * (stack.isEmpty()  ? i : i - stack.peek() - 1));
+                    max = Math.max(max, heights[j] * ( stack.isEmpty() ? i : i - stack.peek() - 1) );
                 }
             }
             return max;

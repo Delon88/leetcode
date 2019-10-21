@@ -8,14 +8,17 @@ public class WildcardMatching {
             int lastStar = -1;
             int lastMatch = 0;
             while ( sCur < s.length() ) {
+                // advancing both pointers
                 if ( pCur < p.length() && (p.charAt(pCur) == '?' || s.charAt(sCur) == p.charAt(pCur))) {
                     sCur++;
                     pCur++;
                 } else if ( pCur < p.length() && p.charAt(pCur) == '*' ) {
+                    // * found, only advancing pattern pointer
                     lastMatch = sCur;
                     lastStar = pCur;
                     pCur++;
                 } else if ( lastStar != -1 ) {
+                    // last pattern pointer was *, advancing string pointer
                     pCur = lastStar + 1;
                     sCur = lastMatch + 1;
                     lastMatch++;

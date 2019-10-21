@@ -12,15 +12,14 @@ public class BinaryTreeInorderTraversal {
             List<Integer> ret = new ArrayList<>();
             Stack<TreeNode> stack = new Stack<>();
             TreeNode cur = root;
-            while ( !stack.isEmpty() || cur != null ) {
-                if ( cur != null) {
+            while (!stack.isEmpty() || cur != null) {
+                while (cur != null) {
                     stack.push(cur);
                     cur = cur.left;
-                } else {
-                    TreeNode node = stack.pop();
-                    ret.add(node.val);
-                    cur = node.right;
                 }
+                TreeNode node = stack.pop();
+                ret.add(node.val);
+                cur = node.right;
             }
             return ret;
         }

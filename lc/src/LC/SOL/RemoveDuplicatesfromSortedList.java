@@ -8,14 +8,12 @@ public class RemoveDuplicatesfromSortedList {
             if ( head == null ) return null;
             ListNode cur = head;
             while ( cur != null ) {
-                ListNode node = cur;
-                while ( node != null && cur.val == node.val) {
-                    ListNode next = node.next;
-                    node.next = null;
-                    node = next;
+                if ( cur.next == null) break;
+                if ( cur.val == cur.next.val) {
+                    cur.next = cur.next.next;
+                } else {
+                    cur = cur.next;
                 }
-                cur.next = node;
-                cur = node;
             }
             return head;
         }
