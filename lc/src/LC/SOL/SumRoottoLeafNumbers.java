@@ -4,25 +4,15 @@ import LC.DS.TreeNode;
 
 public class SumRoottoLeafNumbers {
     class Solution {
-
-        int sum;
         public int sumNumbers(TreeNode root) {
-            sum = 0;
-            solve(root, new StringBuilder());
-            return sum;
+            return sum(root, 0);
         }
 
-        void solve(TreeNode root, StringBuilder b ) {
-            if ( root == null  ) return ;
-            b.append(root.val);
-            if ( root.left == null && root.right == null) {
-                sum += Integer.parseInt(b.toString());
-            }
-            solve(root.left, b);
-            solve(root.right, b);
-            b.deleteCharAt(b.length() - 1);
+        public int sum(TreeNode n, int s) {
+            if (n == null) return 0;
+            int newSum = s * 10 + n.val;
+            if (n.right == null && n.left == null) return newSum;
+            return sum(n.left, newSum) + sum(n.right, newSum);
         }
-
-
     }
 }

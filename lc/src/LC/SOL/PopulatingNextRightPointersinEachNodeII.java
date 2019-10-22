@@ -1,15 +1,15 @@
 package LC.SOL;
 
-import LC.DS.TreeLinkNode;
+import LC.DS.Node;
 
 public class PopulatingNextRightPointersinEachNodeII {
     public class Solution {
-        public void connect(TreeLinkNode root) {
-            TreeLinkNode levelStart = root;
-            TreeLinkNode dummyHead = new TreeLinkNode(0);
-            TreeLinkNode prev = dummyHead;
+        public Node connect(Node root) {
+            Node levelStart = root;
+            Node dummyHead = new Node();
+            Node prev = dummyHead;
             while ( levelStart != null ) {
-                TreeLinkNode cur = levelStart;
+                Node cur = levelStart;
                 while ( cur != null ) {
                     if ( cur.left != null ) {
                         prev.next = cur.left;
@@ -23,8 +23,9 @@ public class PopulatingNextRightPointersinEachNodeII {
                 }
                 levelStart = dummyHead.next;
                 prev = dummyHead;
-                prev.next = null;
+                dummyHead.next = null;
             }
+            return root;
         }
     }
 }
