@@ -15,9 +15,8 @@ public class BinaryTreeRightSideView {
             Queue<TreeNode> q = new LinkedList<>();
             q.offer(root);
             while (!q.isEmpty()) {
-                int size = q.size();
                 TreeNode last = null;
-                for ( int i = 0 ; i < size ; i++){
+                for ( int i = q.size() ; i > 0  ; i--){
                     last = q.poll();
                     if ( last.left != null) { q.offer(last.left);}
                     if ( last.right != null ) {q.offer(last.right);}
