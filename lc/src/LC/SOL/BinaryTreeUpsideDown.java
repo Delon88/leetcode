@@ -1,6 +1,5 @@
 package LC.SOL;
 
-import LC.DS.ListNode;
 import LC.DS.TreeNode;
 
 public class BinaryTreeUpsideDown {

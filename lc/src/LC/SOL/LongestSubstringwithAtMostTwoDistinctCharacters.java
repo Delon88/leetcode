@@ -8,18 +8,18 @@ public class LongestSubstringwithAtMostTwoDistinctCharacters {
         public int lengthOfLongestSubstringTwoDistinct(String s) {
             Map<Character,Integer> map = new HashMap<>();
 
-            int start = 0 , end = 0;
+            int i = 0 , j = 0;
             int max = 0 ;
-            for (  ; end < s.length() ; end++) {
-                char c = s.charAt(end);
+            for (  ; j < s.length() ; j++) {
+                char c = s.charAt(j);
                 map.put(c, map.getOrDefault(c , 0) + 1);
                 while ( map.size() > 2) {
-                    char startChar = s.charAt(start);
+                    char startChar = s.charAt(i);
                     map.put(startChar, map.get(startChar) - 1);
                     if ( map.get(startChar) <= 0) { map.remove(startChar);}
-                    start++;
+                    i++;
                 }
-                max = Math.max(end - start + 1 , max);
+                max = Math.max(j - i + 1 , max);
             }
             return max;
         }

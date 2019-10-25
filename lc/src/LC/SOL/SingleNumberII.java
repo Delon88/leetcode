@@ -4,32 +4,29 @@ public class SingleNumberII {
     class Solution {
         public int singleNumber1(int[] nums) {
             int ones = 0, twos = 0;
-            for ( int n : nums) {
-                ones = ( ones ^ n ) & ~twos;
-                twos = ( twos ^ n ) & ~ones;
+            for (int n : nums) {
+                ones = (ones ^ n) & ~twos;
+                twos = (twos ^ n) & ~ones;
             }
             return ones;
         }
 
+    }
 
+    class Solution1 {
         public int singleNumber(int[] nums) {
-            return solve(nums, 3);
-        }
-
-        int solve(int[] nums, int K) {
-            int[] c = new int[31];
-            for ( int n : nums) {
-                for ( int i = 0 ; i < 31;  i++) {
-                    c[i] += (n | (1 << i)) > 0 ? 1 : 0;
-                    if ( c[i] == K ) c[i] = 0;
+            int ans = 0;
+            for (int i = 0; i < 32; i++) {
+                int count = 0;
+                for ( int n : nums) {
+                    count += ( ( n >> i) & 1 ) == 1 ? 1: 0;
+                    count %= 3;
+                }
+                if ( count == 1 ) {
+                    ans |= ( 1 << i);
                 }
             }
-            StringBuilder b = new StringBuilder();
-            for ( int i = 30 ; i >= 0 ; i--) {
-                b.append(c[i]);
-            }
-            return Integer.parseInt(b.toString() , 2);
+            return ans;
         }
-
     }
 }
