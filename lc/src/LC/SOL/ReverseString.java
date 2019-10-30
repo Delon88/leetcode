@@ -2,14 +2,12 @@ package LC.SOL;
 
 public class ReverseString {
     class Solution {
-        public String reverseString(String s) {
-            char[] a = s.toCharArray();
-            for ( int start = 0 , end = s.length() - 1; start < end ; start++, end--) {
-                char tmp = a[start];
-                a[start] = a[end];
-                a[end] = tmp;
+        public void reverseString(char[] s) {
+            for (int start = 0, end = s.length - 1; start < end; start++, end--) {
+                char tmp = s[start];
+                s[start] = s[end];
+                s[end] = tmp;
             }
-            return new String(a);
         }
     }
 }

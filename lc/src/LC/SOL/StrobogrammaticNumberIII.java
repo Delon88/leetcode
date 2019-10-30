@@ -26,7 +26,7 @@ public class StrobogrammaticNumberIII {
                 tmp[start] = p[0];
                 tmp[end] = p[1];
                 if (tmp.length != 1 && tmp[0] == '0') continue;
-                if ((start == end && p[0] == p[1]) || (start < end)) {
+                if ((p[0] == p[1]) || (start < end)) {
                     dfs(low, high, tmp, start + 1, end - 1);
                 }
             }

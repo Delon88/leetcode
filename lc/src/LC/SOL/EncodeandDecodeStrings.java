@@ -9,7 +9,7 @@ public class EncodeandDecodeStrings {
         // Encodes a list of strings to a single string.
         public String encode(List<String> strs) {
             StringBuilder b = new StringBuilder();
-            for ( String s : strs) {
+            for (String s : strs) {
                 b.append(s.length()).append("#").append(s);
             }
             return b.toString();
@@ -18,49 +18,44 @@ public class EncodeandDecodeStrings {
         // Decodes a single string to a list of strings.
         public List<String> decode(String s) {
             List<String> words = new ArrayList<>();
-            if ( s.length() == 0) return words;
+            if (s.length() == 0) return words;
             int i = 0;
-            while ( i < s.length() ) {
-                int len = 0 ;
-                while ( s.charAt(i) != '#') {
+            while (i < s.length()) {
+                int len = 0;
+                while (s.charAt(i) != '#') {
                     len = len * 10 + (s.charAt(i) - '0');
                     i++;
                 }
                 i++;
-                if ( len != 0 ) {words.add(s.substring(i, i + len));}
-                else {words.add("");}
-                i+= len;
+                if (len != 0) {
+                    words.add(s.substring(i, i + len));
+                } else {
+                    words.add("");
+                }
+                i += len;
             }
             return words;
         }
+    }
 
+    public class Codec2 {
+        // Encodes a list of strings to a single string.
+        public String encode(List<String> strs) {
+            StringBuilder b = new StringBuilder();
+            for (String s : strs) {
+                b.append(s.replaceAll("#", "##")).append(" # ");
+            }
+            return b.toString();
+        }
 
-//        // Encodes a list of strings to a single string.
-//        public String encode(List<String> strs) {
-//            StringBuilder b = new StringBuilder();
-//            for ( String s : strs) {
-//                b.append(s.length()).append("#").append(s);
-//            }
-//            return b.toString();
-//        }
-//
-//        // Decodes a single string to a list of strings.
-//        public List<String> decode(String s) {
-//            List<String> words = new ArrayList<>();
-//            if ( s.length() == 0) return words;
-//            int i = 0;
-//            while ( i < s.length() ) {
-//                int len = 0 ;
-//                while ( s.charAt(i) != '#') {
-//                    len = len * 10 + (s.charAt(i) - '0');
-//                    i++;
-//                }
-//                i++;
-//                if ( len != 0 ) {words.add(s.substring(i, i + len));}
-//                else {words.add("");}
-//                i+= len;
-//            }
-//            return words;
-//        }
+        // Decodes a single string to a list of strings.
+        public List<String> decode(String s) {
+            String[] words = s.split(" # ", -1);
+            List<String> ret = new ArrayList<>();
+            for (int i = 0; i < words.length - 1; i++) {
+                ret.add(words[i].replaceAll("##", "#"));
+            }
+            return ret;
+        }
     }
 }

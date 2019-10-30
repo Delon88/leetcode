@@ -7,18 +7,14 @@ public class FindtheCelebrity {
         }
 
         public int findCelebrity(int n) {
-            int start = 0, end = n - 1;
-            while (start < end) {
-                if (knows(start, end)) start++;
-                else end--;
+            int cand = 0;
+            for (int i = 1; i < n; i++) {
+                if (knows(cand, i)) cand = i;
             }
-
-            for (int i = 0; i < n; i++) {
-                if (i != start) {
-                    if ( knows(start , i) || !knows(i , start) ) return -1;
-                }
+            for( int i = 0 ; i < n ; i++) {
+                if ( i != cand && (knows(cand,i) || !knows(i, cand))) return -1;
             }
-            return start;
+            return cand;
         }
     }
 }

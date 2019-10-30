@@ -11,7 +11,7 @@ public class GroupShiftedStrings {
             Map<String,List<String>> map = new HashMap<>();
             for ( String s : strings) {
                 String encoded = encode(s);
-                if ( !map.containsKey(encoded)) {map.put(encoded, new ArrayList<>());}
+                map.putIfAbsent(encoded, new ArrayList<>());
                 map.get(encoded).add(s);
             }
             List<List<String>> ret = new ArrayList<>();

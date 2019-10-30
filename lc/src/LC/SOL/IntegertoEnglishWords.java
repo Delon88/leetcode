@@ -16,7 +16,7 @@ public class IntegertoEnglishWords {
             int unitIndex = 0;
             while ( num > 0 ) {
                 if ( num % 1000 != 0) {
-                    w = getRep(num % 1000 ) + thousands[unitIndex] + " "+w;
+                    w = getWord(num % 1000 ) + thousands[unitIndex] + " "+ w;
                 }
                 num /= 1000;
                 unitIndex++;
@@ -24,14 +24,14 @@ public class IntegertoEnglishWords {
             return w.trim();
         }
 
-        String getRep(int num) {
+        String getWord(int num) {
             if ( num == 0 ) return "";
             if ( num < 20 ) {
                 return lessThan20[num] + " ";
             } else if ( num < 100) {
-                return tens[num / 10] + " " + getRep(num % 10);
+                return tens[num / 10] + " " + getWord(num % 10);
             } else {
-                return  lessThan20[num / 100]+ " Hundred " + getRep(num % 100);
+                return  lessThan20[num / 100]+ " Hundred " + getWord(num % 100);
             }
         }
     }

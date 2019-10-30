@@ -13,33 +13,43 @@ public class MaxSumofRectangleNoLargerThanK {
 //    k = 2
 
     class Solution {
-        public int maxSumSubmatrix(int[][] matrix, int target) {
-            if ( matrix == null  || matrix.length == 0 ) return 0;
-            int row = matrix.length;
-            int col = matrix[0].length;
-            int m = Math.min(row, col);
-            int n = Math.max(row, col);
-            boolean isColBigger = col > row;
-            int ret = Integer.MIN_VALUE;
-            for ( int i = 0 ; i < m; i++) {
-                int[] sums = new int[n];
-                // sum from row j to i;
-                for ( int j = i ; j >= 0 ; j-- ) {
-                    int tmp = 0 ;
-                    TreeSet<Integer> set = new TreeSet<>();
+        public int maxSumSubmatrix(int[][] matrix, int k) {
+            //2D Kadane's algorithm + 1D maxSum problem with sum limit k
+            //2D subarray sum solution
+
+            //boundary check
+            if (matrix.length == 0) return 0;
+
+            int m = matrix.length, n = matrix[0].length;
+            int result = Integer.MIN_VALUE;
+
+            //outer loop should use smaller axis
+            //now we assume we have more rows than cols, therefore outer loop will be based on cols
+            for (int left = 0; left < n; left++) {
+                //array that accumulate sums for each row from left to right
+                int[] sums = new int[m];
+                for (int right = left; right < n; right++) {
+                    //update sums[] to include values in curr right col
+                    for (int i = 0; i < m; i++) {
+                        sums[i] += matrix[i][right];
+                    }
+
+                    //we use TreeSet to help us find the rectangle with maxSum <= k with O(logN) time
+                    TreeSet<Integer> set = new TreeSet<Integer>();
+                    //add 0 to cover the single row case
                     set.add(0);
-                    for ( int k = 0 ; k < n ; k++ ) {
-                        sums[k] += isColBigger ? matrix[j][k] : matrix[k][j];
-                        tmp += sums[k];
-                        Integer ceil = set.ceiling(tmp - target );
-                        if ( ceil != null ) {
-                            ret = Math.max(ret, tmp - ceil);
-                        }
-                        set.add(tmp);
+                    int currSum = 0;
+                    for (int sum : sums) {
+                        currSum += sum;
+                        //we use sum subtraction (curSum - sum) to get the subarray with sum <= k
+                        //therefore we need to look for the smallest sum >= currSum - k
+                        Integer num = set.ceiling(currSum - k);
+                        if (num != null) result = Math.max(result, currSum - num);
+                        set.add(currSum);
                     }
                 }
             }
-            return ret;
+            return result;
         }
     }
 }

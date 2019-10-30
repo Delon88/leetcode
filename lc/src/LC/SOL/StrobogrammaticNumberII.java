@@ -33,7 +33,7 @@ public class StrobogrammaticNumberII {
             for ( Map.Entry<Character,Character> e : map.entrySet()) {
                 tmp[start] = e.getKey();
                 tmp[end] = e.getValue();
-                if ( start == end && e.getKey() == e.getValue() || (start < end)) {
+                if ( e.getKey() == e.getValue() || start < end) {
                     dfs(tmp, start + 1 ,end - 1, ret);
                 }
             }

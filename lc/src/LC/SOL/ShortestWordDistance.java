@@ -19,7 +19,7 @@ public class ShortestWordDistance {
             while ( i1 < map.get(word1).size() && i2 < map.get(word2).size() ) {
                 int index1 = map.get(word1).get(i1), index2 = map.get(word2).get(i2);
                 min = Math.min(Math.abs(index1 - index2) , min);
-                if ( map.get(word1).get(i1) < map.get(word2).get(i2) ) {
+                if ( index1 < index2 ) {
                     i1++;
                 } else {
                     i2++;

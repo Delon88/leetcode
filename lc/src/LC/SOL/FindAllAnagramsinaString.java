@@ -6,31 +6,27 @@ import java.util.List;
 public class FindAllAnagramsinaString {
     public class Solution {
         public List<Integer> findAnagrams(String s, String p) {
-            List<Integer> ret = new ArrayList<>();
-            int[] hash = new int[256];
-            if (s == null || s.length() == 0 || p == null || p.length() == 0) return ret;
-            for (int i = 0; i < p.length(); i++) {
-                hash[p.charAt(i)]++;
+            int toFind = p.length();
+            List<Integer> list = new ArrayList<>();
+            int[] count = new int[256];
+            for ( int i = 0  ; i < p.length() ; i++) {
+                count[p.charAt(i)]++;
             }
-
-            int start = 0, end = 0, count = 0;
-            while (end < s.length()) {
-                if (hash[s.charAt(end)] >= 1) count++;
-                hash[s.charAt(end)]--;
+            int start = 0 , end = 0;
+            while ( end < s.length()) {
+                if ( count[s.charAt(end)] >= 1 ) toFind--;
+                count[s.charAt(end)]--;
                 end++;
-
-                if (count == p.length()) {
-                    ret.add(start);
-                }
-                if (end - start == p.length()) {
-                    if (hash[s.charAt(start)] >= 0) {
-                        count--;
+                if ( toFind == 0 ) list.add(start);
+                if ( end - start == p.length() ) {
+                    if ( count[s.charAt(start)] >= 0 ) {
+                        toFind++;
                     }
-                    hash[s.charAt(start)]++;
+                    count[s.charAt(start)]++;
                     start++;
                 }
             }
-            return ret;
+            return list;
         }
     }
 }

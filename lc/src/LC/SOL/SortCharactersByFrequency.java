@@ -30,7 +30,7 @@ public class SortCharactersByFrequency {
             for (int i = s.length(); i >= 0; i--) {
                 if (buckets[i] != null) {
                     for (Character c : buckets[i]) {
-                        for ( int j = 0 ; j < i ; j++) {
+                        for (int j = 0; j < i; j++) {
                             b.append(c);
                         }
                     }

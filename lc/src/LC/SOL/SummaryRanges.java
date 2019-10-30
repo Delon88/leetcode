@@ -10,7 +10,7 @@ public class SummaryRanges {
             List<String> ret = new ArrayList<>();
             while (i < n) {
                 int j = i;
-                while (i < n - 1 && nums[i] == nums[i + 1] - 1) {
+                while (i < n - 1 && (nums[i] == nums[i + 1] - 1 || nums[i] == nums[i + 1])) {
                     i++;
                 }
                 ret.add(getRange(nums, j, i));

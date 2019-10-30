@@ -11,7 +11,7 @@ public class CountCompleteTreeNodes {
             if ( rightH == h - 1) {
                 return ( 1 << h ) + countNodes(root.right);
             } else {
-                return ( 1 << h - 1) + countNodes(root.left);
+                return ( 1 << (h - 1)) + countNodes(root.left);
             }
         }
 

@@ -20,7 +20,7 @@ public class MaximumSumof3NonOverlappingSubarrays {
             int[] right = new int[n];
             right[n - k] = n - k;
             for (int i = n - k - 1, tmp = sum[n] - sum[n - k]; i >= 0; i--) {
-                if (sum[i + k] - sum[i] > tmp) {
+                if (sum[i + k] - sum[i] >= tmp) {
                     right[i] = i;
                     tmp = sum[i + k] - sum[i];
                 } else {

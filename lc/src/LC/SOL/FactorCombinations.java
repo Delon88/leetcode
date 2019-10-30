@@ -13,7 +13,7 @@ public class FactorCombinations {
         }
 
         void dfs(int start, int end, List<Integer> tmp, List<List<Integer>> ret) {
-            if ( end <= 1 ) {
+            if ( end == 1 ) {
                 if ( tmp.size() > 1 ) {
                     ret.add(new ArrayList<>(tmp));
                 }

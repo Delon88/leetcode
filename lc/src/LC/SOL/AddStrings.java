@@ -7,21 +7,13 @@ public class AddStrings {
             int i = num1.length() - 1, j = num2.length() - 1;
             int carry = 0;
             StringBuilder builder = new StringBuilder();
-            while (i >= 0 && j >= 0) {
-                int d1 = num1.charAt(i) - '0';
-                int d2 = num2.charAt(j) - '0';
+            while (i >= 0 || j >= 0) {
+                int d1 = i >= 0 ? num1.charAt(i) - '0' : 0;
+                int d2 = j >= 0 ? num2.charAt(j) - '0' : 0;
                 int sum = d1 + d2 + carry;
                 builder.append(sum % 10);
                 carry = sum / 10;
                 i--;j--;
-            }
-
-            while ( i >= 0 ) {
-                int d1 = (int) num1.charAt(i) - '0';
-                int sum = d1 + carry;
-                builder.append(sum % 10);
-                carry = sum / 10;
-                i--;
             }
 
             if ( carry != 0 ) builder.append(carry);
