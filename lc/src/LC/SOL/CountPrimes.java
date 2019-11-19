@@ -8,13 +8,13 @@ public class CountPrimes {
             for ( int i = 2 ;i * i <= n ; i ++) {
                 if ( !notPrime[i]) {
                     int j = i * i;
-                    while ( j <= n ) {
+                    while ( j < n ) {
                         notPrime[j] = true;
                         j += i;
                     }
                 }
             }
-            for ( int i = 2 ;i  < n  ;i++) {
+            for ( int i = 2 ;i  <= n  ;i++) {
                 if ( !notPrime[i]) count++;
             }
             return count;
