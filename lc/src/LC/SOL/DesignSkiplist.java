@@ -1,22 +1,106 @@
 package LC.SOL;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class DesignSkiplist {
-    class Skiplist {
+    private static final double DEFAULT_PROB = 0.5;
+    private final Random rand = new Random();
+    private final List<Node> sentinels = new ArrayList<>();
 
-        public Skiplist() {
+    {
+        sentinels.add(new Node(Integer.MIN_VALUE));
+    }
 
+    public boolean search(int target) {
+        Node smallerOrEquals = getSmallerOrEquals(target);
+        if ( smallerOrEquals == null ) return false;
+        return smallerOrEquals.val == target;
+    }
+
+    public void add(int num) {
+        Node cur = getSmallerOrEquals(num);
+        // cur 最下层，比他小或者等于 num
+        final Node toInsert = new Node(num);
+        append(cur, toInsert);
+        // populate the level
+        populateLevelUp(toInsert);
+    }
+
+    private void populateLevelUp(final Node toInsert) {
+        Node curPrev = toInsert.left, cur = toInsert;
+
+        while (flipCoin()) {
+            while (curPrev.left != null && curPrev.up == null) {
+                curPrev = curPrev.left;
+            }
+            if (curPrev.up == null) {
+                final Node newSentinel = new Node(Integer.MIN_VALUE);
+                curPrev.up = newSentinel;
+                newSentinel.down = curPrev;
+                sentinels.add(curPrev.up);
+            }
+            curPrev = curPrev.up;
+            final Node newNode = new Node(toInsert.val);
+            cur.up = newNode;
+            newNode.down = cur;
+            cur = cur.up;
+            curPrev.right = cur;
+            cur.left = curPrev;
         }
+    }
 
-        public boolean search(int target) {
-
+    private void append(Node prev, Node insert) {
+        final Node next = prev.right;
+        prev.right = insert;
+        insert.left = prev;
+        if (next != null) {
+            next.left = insert;
+            insert.right = next;
         }
+    }
 
-        public void add(int num) {
-
+    public boolean erase(int num) {
+        final Node toRemove = getSmallerOrEquals(num);
+        if (toRemove.val != num) {
+            return false;
         }
+        Node cur = toRemove;
+        while (cur != null) {
+            final Node prev = cur.left, next = cur.right;
+            prev.right = next;
+            if (next != null) {
+                next.left = prev;
+            }
+            cur = cur.up;
+        }
+        return true;
+    }
 
-        public boolean erase(int num) {
+    private Node getSmallerOrEquals(final int target) {
+        Node cur = sentinels.get(sentinels.size() - 1);
+        while (cur != null) {
+            if (cur.right == null || cur.right.val > target) {
+                if (cur.down == null) break;
+                cur = cur.down;
+            } else {
+                cur = cur.right;
+            }
+        }
+        return cur;
+    }
 
+    private boolean flipCoin() {
+        return rand.nextDouble() < DEFAULT_PROB;
+    }
+
+    private static final class Node {
+        private final int val;
+        private Node left, right, up, down;
+
+        private Node(int val) {
+            this.val = val;
         }
     }
 }
