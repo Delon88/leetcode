@@ -1,20 +1,23 @@
 package LC.SOL;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class LongestSubstringWithoutRepeatingCharacters {
     class Solution {
         public int lengthOfLongestSubstring(String s) {
-            if (s.length()==0) return 0;
-            Map<Character, Integer> map = new HashMap<>();
-            int max=0;
-            for ( int start = 0 , end = 0 ; end < s.length() ; end++) {
-                if ( map.containsKey(s.charAt(end))) {
-                    start = Math.max(start , map.get(s.charAt(end)) + 1);
+            int i  = 0 , j = 0;
+            Set<Character> set = new HashSet<>(s.length());
+            int max = 0 ;
+            for( ; j < s.length() ; j++) {
+                char c = s.charAt(j);
+                while ( set.contains(c) && i < j ) {
+                    set.remove(s.charAt(i++));
                 }
-                map.put(s.charAt(end) , end);
-                max = Math.max(end - start + 1 , max);
+                max = Math.max(max , j - i + 1);
+                set.add(c);
             }
             return max;
         }

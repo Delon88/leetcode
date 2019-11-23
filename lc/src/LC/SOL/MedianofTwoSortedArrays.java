@@ -7,15 +7,15 @@ public class MedianofTwoSortedArrays {
             if (m > n) {
                 return findMedianSortedArrays(nums2, nums1);
             }
-            int i = 0, j = 0, imin = 0, imax = m;
+            int i = 0, j = 0, istart = 0, iend = m;
             double maxLeft = 0, minRight = 0;
-            while (imin <= imax) {
-                i = (imin + imax) / 2;
+            while (istart <= iend) {
+                i = (istart + iend) / 2;
                 j = (m + n + 1) / 2 - i;
                 if (j > 0 && i < m && nums2[j - 1] > nums1[i]) {
-                    imin = i + 1;
+                    istart = i + 1;
                 } else if (i > 0 && j < n && nums1[i - 1] > nums2[j]) {
-                    imax = i - 1;
+                    iend = i - 1;
                 } else {
                     if (i == 0) {
                         maxLeft = nums2[j - 1];

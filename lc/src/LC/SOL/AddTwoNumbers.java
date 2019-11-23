@@ -5,29 +5,20 @@ import LC.DS.ListNode;
 public class AddTwoNumbers {
     class Solution {
         public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-            int carry = 0;
+            int sum = 0;
             ListNode c1 = l1;
             ListNode c2 = l2;
-            ListNode ret = new ListNode(0);
-            ListNode cur = ret;
-            while (c1 != null && c2 != null) {
-                int sum = c1.val + c2.val + carry;
-                cur.next = new ListNode(sum % 10);
-                cur = cur.next;
-                carry = sum / 10;
-                c1 = c1.next;
-                c2 = c2.next;
+            ListNode dummy = new ListNode(0);
+            ListNode cd = dummy;
+            while ( c1 != null || c2 != null) {
+                if ( c1 != null) { sum+= c1.val; c1 = c1.next;}
+                if ( c2 != null) { sum += c2.val; c2 = c2.next;}
+                cd.next = new ListNode( sum % 10);
+                cd = cd.next;
+                sum /= 10;
             }
-            ListNode remain = c1 == null ? c2 : c1;
-            while (remain != null) {
-                int sum = remain.val + carry;
-                cur.next = new ListNode(sum % 10);
-                cur = cur.next;
-                carry = sum / 10;
-                remain = remain.next;
-            }
-            if ( carry != 0 ) cur.next = new ListNode(carry);
-            return ret.next;
+            if ( sum != 0) cd.next = new ListNode(sum);
+            return dummy.next;
         }
     }
 }
