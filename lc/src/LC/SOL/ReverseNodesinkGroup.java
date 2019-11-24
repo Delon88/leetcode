@@ -7,37 +7,34 @@ public class ReverseNodesinkGroup {
         public ListNode reverseKGroup(ListNode head, int k) {
             if (head == null || k < 2) return head;
             ListNode dummyHead = new ListNode(0);
+            ListNode begin = dummyHead;
             dummyHead.next = head;
             int i = 0;
-            ListNode cur = head;
-            ListNode prev = dummyHead;
-            while (cur != null) {
+            while (head != null) {
                 i++;
                 if (i % k == 0) {
-                    ListNode next = cur.next;
-                    ListNode newHead = reverse(prev.next, next);
-                    ListNode oldHead = prev.next;
-                    oldHead.next = next;
-                    prev.next = newHead;
-                    prev = oldHead;
-                    cur = next;
+                    begin = reverse(begin, head.next);
+                    head = begin.next;
                 } else {
-                    cur = cur.next;
+                    head = head.next;
                 }
             }
             return dummyHead.next;
         }
 
-        ListNode reverse(ListNode head, ListNode end) {
-            ListNode prev = null;
-            ListNode cur = head;
+        ListNode reverse(ListNode begin, ListNode end) {
+            ListNode cur = begin.next;
+            ListNode last = cur;
+            ListNode prev = begin;
             while (cur != end) {
                 ListNode next = cur.next;
                 cur.next = prev;
                 prev = cur;
                 cur = next;
             }
-            return prev;
+            begin.next = prev;
+            last.next = cur;
+            return last;
         }
     }
 
@@ -52,7 +49,7 @@ public class ReverseNodesinkGroup {
             ListNode dummy = new ListNode(0);
             dummy.next = head;
             cur = head;
-            for (ListNode prev = dummy ; l >= k; l -= k) {
+            for (ListNode prev = dummy; l >= k; l -= k) {
                 for (int i = 1; i < k; i++) {
                     ListNode next = cur.next.next;
                     cur.next.next = prev.next;

@@ -14,7 +14,6 @@ public class RemoveNthNodeFromEndofList {
                 p1 = p1.next;
                 n--;
             }
-            if ( p1.next == null && n > 0 ) return head;
             while ( p1.next != null) {
                 p2 = p2.next;
                 p1 = p1.next;

@@ -10,7 +10,6 @@ public class _4Sum {
             List<List<Integer>> ret = new ArrayList<>();
             if ( nums.length <= 3) return ret;
             Arrays.sort(nums);
-            if ( nums.length == 0 ) return ret;
             int n = nums.length;
             for (int i = 0; i < n - 3; i++) {
                 if (i != 0 && nums[i] == nums[i - 1]) continue;
