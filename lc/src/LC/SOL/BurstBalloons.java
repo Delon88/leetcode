@@ -13,7 +13,7 @@ public class BurstBalloons {
         }
 
         int dfs(int[] ba, int start, int end ) {
-            if ( start + 1 == end ) return 0;
+            if ( start > end ) return 0;
             if ( memo[start][end] > 0 ) return memo[start][end];
             int ret =0;
             for ( int i = start + 1 ; i < end ; i++) {

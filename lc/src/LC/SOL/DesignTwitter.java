@@ -5,9 +5,56 @@ import java.util.*;
 public class DesignTwitter {
     class Twitter {
 
-        Map<Integer, User> userMap;
+        private long timeStamp = 0;
 
-        long addTime = 0l;
+        // easy to find if user exist
+        private Map<Integer, User> userMap;
+
+        // Tweet link to next Tweet so that we can save a lot of time
+        // when we execute getNewsFeed(userId)
+        private class Tweet {
+            public int id;
+            public long time;
+            public Tweet next;
+
+            public Tweet(int id) {
+                this.id = id;
+                time = timeStamp++;
+                next = null;
+            }
+        }
+
+
+        // OO design so User can follow, unfollow and post itself
+        public class User {
+            public int id;
+            public Set<Integer> followed;
+            public Tweet tweet_head;
+
+            public User(int id) {
+                this.id = id;
+                followed = new HashSet<>();
+                follow(id); // first follow itself
+                tweet_head = null;
+            }
+
+            public void follow(int id) {
+                followed.add(id);
+            }
+
+            public void unfollow(int id) {
+                followed.remove(id);
+            }
+
+
+            // everytime user post a new tweet, add it to the head of tweet list.
+            public void post(int id) {
+                Tweet t = new Tweet(id);
+                t.next = tweet_head;
+                tweet_head = t;
+            }
+        }
+
 
         /**
          * Initialize your data structure here.
@@ -16,35 +63,54 @@ public class DesignTwitter {
             userMap = new HashMap<>();
         }
 
-        public void ensureUserExist(int... ids) {
-            for (int id : ids) {
-                if (!userMap.containsKey(id)) {
-                    userMap.put(id, new User(id));
-                }
-            }
-        }
-
         /**
          * Compose a new tweet.
          */
         public void postTweet(int userId, int tweetId) {
-            ensureUserExist(userId);
-            userMap.get(userId).postTweets(tweetId);
+            userMap.putIfAbsent(userId, new User(userId));
+            userMap.get(userId).post(tweetId);
         }
 
-        /**
-         * Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent.
-         */
+
+        // Best part of this.
+        // first get all tweets lists from one user including itself and all people it followed.
+        // Second add all heads into a max heap. Every time we poll a tweet with
+        // largest time stamp from the heap, then we add its next tweet into the heap.
+        // So after adding all heads we only need to add 9 tweets at most into this
+        // heap before we get the 10 most recent tweet.
         public List<Integer> getNewsFeed(int userId) {
-            ensureUserExist(userId);
-            return userMap.get(userId).getNewsFeed();
+            List<Integer> res = new LinkedList<>();
+
+            if (!userMap.containsKey(userId)) return res;
+
+            Set<Integer> users = userMap.get(userId).followed;
+            PriorityQueue<Tweet> q = new PriorityQueue<>(users.size(), (a, b) -> (int) (b.time - a.time));
+            for (int user : users) {
+                Tweet t = userMap.get(user).tweet_head;
+                // very imporant! If we add null to the head we are screwed.
+                if (t != null) {
+                    q.add(t);
+                }
+            }
+            int n = 0;
+            while (!q.isEmpty() && n < 10) {
+                Tweet t = q.poll();
+                res.add(t.id);
+                n++;
+                if (t.next != null)
+                    q.add(t.next);
+            }
+
+            return res;
+
         }
 
         /**
          * Follower follows a followee. If the operation is invalid, it should be a no-op.
          */
         public void follow(int followerId, int followeeId) {
-            ensureUserExist(followerId, followeeId);
+            userMap.putIfAbsent(followerId, new User(followerId));
+            userMap.putIfAbsent(followeeId, new User(followeeId));
             userMap.get(followerId).follow(followeeId);
         }
 
@@ -52,71 +118,9 @@ public class DesignTwitter {
          * Follower unfollows a followee. If the operation is invalid, it should be a no-op.
          */
         public void unfollow(int followerId, int followeeId) {
-            ensureUserExist(followerId, followeeId);
+            if (!userMap.containsKey(followerId) || followerId == followeeId)
+                return;
             userMap.get(followerId).unfollow(followeeId);
-        }
-
-        class User {
-            public User(int id) {
-                this.id = id;
-            }
-
-            int id;
-            Set<Integer> follows = new HashSet<>();
-            List<Tweet> tweets = new ArrayList<>();
-
-            public void follow(int followeeId) {
-                follows.add(followeeId);
-            }
-
-            public void unfollow(int followeeId) {
-                follows.remove(followeeId);
-            }
-
-            public List<Integer> getNewsFeed() {
-                List<Integer> ret = new ArrayList<>();
-                PriorityQueue<TweetsPair> q = new PriorityQueue<>((t1, t2) -> (int) (t2.list.get(t2.index).ts - t1.list.get(t1.index).ts));
-                for (Integer f : follows) {
-                    if ( !userMap.get(f).tweets.isEmpty() ) {
-                        q.offer(new TweetsPair(userMap.get(f).tweets));
-                    }
-                }
-                if ( !tweets.isEmpty() && !follows.contains(id)) q.offer(new TweetsPair(tweets));
-                for (int i = 0; i < 10 && !q.isEmpty(); i++) {
-                    TweetsPair tp = q.poll();
-                    ret.add(tp.list.get(tp.index).id);
-                    tp.index--;
-                    if (tp.index >= 0) {
-                        q.offer(tp);
-                    }
-                }
-                q = null;
-                return ret;
-            }
-
-            public void postTweets(int id) {
-                tweets.add(new Tweet(id, addTime++));
-            }
-        }
-
-        class TweetsPair {
-            List<Tweet> list;
-            int index;
-
-            public TweetsPair(List<Tweet> list) {
-                index = list.size() - 1;
-                this.list = list;
-            }
-        }
-
-        class Tweet {
-            int id;
-            long ts;
-
-            public Tweet(int id, long ts) {
-                this.id = id;
-                this.ts = ts;
-            }
         }
     }
 

@@ -13,16 +13,12 @@ public class BinaryTreeZigzagLevelOrderTraversal {
             q.offer(root);
             boolean reverse = false;
             while ( !q.isEmpty()) {
-                int size = q.size();
-                List<Integer> tmp = new ArrayList<>();
-                for ( int i = 0 ;i  < size ; i++) {
+                LinkedList<Integer> tmp = new LinkedList<>();
+                for ( int i = q.size() ; i > 0 ; i--) {
                     TreeNode node = q.poll();
-                    tmp.add(node.val);
+                    if ( reverse) tmp.addFirst(node.val); else tmp.add(node.val);
                     if ( node.left != null ) {q.offer(node.left);}
                     if ( node.right != null) {q.offer(node.right);}
-                }
-                if ( reverse ) {
-                    Collections.reverse(tmp);
                 }
                 ret.add(tmp);
                 reverse = !reverse;

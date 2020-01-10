@@ -4,41 +4,49 @@ import java.util.*;
 
 public class CountofSmallerNumbersAfterSelf {
     class Solution {
+        class Pair {
+            int index;
+            int val;
+            public Pair(int index, int val) {
+                this.index = index;
+                this.val = val;
+            }
+        }
+
         public List<Integer> countSmaller(int[] nums) {
-            int[] sorted = Arrays.copyOf(nums, nums.length);
-            Arrays.sort(sorted);
-            Map<Integer,Integer> map = new HashMap<>();
-            int rank = 1;
-            for ( int i : sorted) {
-                if ( !map.containsKey(i)) {
-                    map.put(i, rank);
-                    rank++;
+            List<Integer> res = new ArrayList<>();
+            if (nums == null || nums.length == 0) {
+                return res;
+            }
+            Pair[] arr = new Pair[nums.length];
+            Integer[] smaller = new Integer[nums.length];
+            Arrays.fill(smaller, 0);
+            for (int i = 0; i < nums.length; i++) {
+                arr[i] = new Pair(i, nums[i]);
+            }
+            mergeSort(arr, smaller);
+            res.addAll(Arrays.asList(smaller));
+            return res;
+        }
+
+        private Pair[] mergeSort(Pair[] arr, Integer[] smaller) {
+            if (arr.length <= 1) {
+                return arr;
+            }
+            int mid = arr.length / 2;
+            Pair[] left = mergeSort(Arrays.copyOfRange(arr, 0, mid), smaller);
+            Pair[] right = mergeSort(Arrays.copyOfRange(arr, mid, arr.length), smaller);
+            for (int i = 0, j = 0; i < left.length || j < right.length; ) {
+                if (j == right.length || i < left.length && left[i].val <= right[j].val) {
+                    arr[i + j] = left[i];
+                    smaller[left[i].index] += j;
+                    i++;
+                } else {
+                    arr[i + j] = right[j];
+                    j++;
                 }
             }
-            int[] bit = new int[map.size() + 1];
-            List<Integer> ret = new ArrayList<>();
-            for (  int i = nums.length - 1 ; i >= 0 ; i--) {
-                ret.add(query(bit, map.get(nums[i]) - 1 ));
-                update(bit, map.get(nums[i]) , 1);
-            }
-            Collections.reverse(ret);
-            return ret;
-        }
-
-        public void update(int[] bit, int index, int value) {
-            while (index < bit.length) {
-                bit[index] += value;
-                index += (index & -index);
-            }
-        }
-
-        public int query(int[] bit, int index) {
-            int sum = 0;
-            while (index > 0) {
-                sum += bit[index];
-                index -= (index & -index);
-            }
-            return sum;
+            return arr;
         }
     }
 }

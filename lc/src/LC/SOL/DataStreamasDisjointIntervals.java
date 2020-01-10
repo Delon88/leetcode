@@ -34,10 +34,10 @@ public class DataStreamasDisjointIntervals {
             }
         }
 
-        public List<Interval> getIntervals() {
-            List<Interval> ret = new ArrayList<>();
+        public int[][] getIntervals() {
+            int[][] ret = new int[map.size()][]; int i = 0;
             for ( Map.Entry<Integer,Integer> in : map.entrySet()) {
-                ret.add(new Interval(in.getKey(), in.getValue()));
+                ret[i++] = new int[]{in.getKey(), in.getValue()};
             }
             return ret;
         }

@@ -1,6 +1,14 @@
 package LC.SOL;
 
 public class NthDigit {
+    /*
+    find len,
+    find number,
+    find digit in the number
+    len = number length
+    count = count of equal length numbers
+    start = current start of same length number
+     */
     public int findNthDigit(int n) {
         long count = 9;
         int len = 1;

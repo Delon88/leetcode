@@ -17,7 +17,6 @@ public class WordSearchII {
             }
             int m = board.length, n = board[0].length;
             Set<String> ret = new HashSet<>();
-            boolean[][] v = new boolean[m][n];
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
                     dfs(board, i, j, trie.root, ret);

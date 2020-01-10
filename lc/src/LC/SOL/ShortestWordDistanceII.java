@@ -13,7 +13,7 @@ public class ShortestWordDistanceII {
             map = new HashMap<>();
             for ( int i = 0  ;i < words.length ; i++) {
                 String w = words[i];
-                if ( !map.containsKey(w)) {map.put(w , new ArrayList<>());}
+                map.putIfAbsent(w , new ArrayList<>());
                 map.get(w).add(i);
             }
         }

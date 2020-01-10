@@ -56,7 +56,8 @@ public class DesignSnakeGame {
          @return The game's score after the move. Return -1 if game over.
          Game over when snake crosses the screen boundary or bites its body. */
         public int move(String direction) {
-            Position next = new Position(snake.getFirst().x, snake.getFirst().y);
+            Position head = snake.getFirst();
+            Position next = new Position(head.x, head.y);
             switch (direction) {
                 case "U": next.x--;break;
                 case "D": next.x++;break;

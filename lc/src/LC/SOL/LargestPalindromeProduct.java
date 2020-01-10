@@ -10,7 +10,7 @@ public class LargestPalindromeProduct {
 
             // represents the first half of the maximum assumed palindrom.
             // e.g. if n = 3 then maxNumber = 999 x 999 = 998001 so firstHalf = 998
-            int firstHalf = (int)(maxNumber / (long) Math.pow(10, n));
+            int firstHalf = (int) (maxNumber / (long) Math.pow(10, n));
 
             boolean found = false;
 
@@ -19,11 +19,11 @@ public class LargestPalindromeProduct {
             while (!found) {
                 palindrome = createPalindrome(firstHalf);
 
-                for ( long i = upperBound; upperBound > lowerBound; i--) {
-                    if (  palindrome / i > upperBound || i * i < palindrome) {
+                for (long i = upperBound; upperBound > lowerBound; i--) {
+                    if (palindrome / i > upperBound || i * i < palindrome) {
                         break;
                     }
-                    if ( palindrome % i == 0) {
+                    if (palindrome % i == 0) {
                         found = true;
                         break;
                     }

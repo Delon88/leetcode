@@ -10,9 +10,9 @@ public class MinimumSizeSubarraySum {
             while (end < n) {
                 sum += nums[end++];
                 while (sum >= s) {
-                    min = Math.min(end - start, min);
                     sum -= nums[start++];
                 }
+                min = Math.min(end - start + 1, min);
             }
             return min == Integer.MAX_VALUE ? 0 : min;
         }

@@ -7,7 +7,6 @@ public class LongestSubstringwithAtMostTwoDistinctCharacters {
     class Solution {
         public int lengthOfLongestSubstringTwoDistinct(String s) {
             Map<Character,Integer> map = new HashMap<>();
-
             int i = 0 , j = 0;
             int max = 0 ;
             for (  ; j < s.length() ; j++) {

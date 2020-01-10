@@ -28,11 +28,11 @@ public class RegularExpressionMatching {
             for (int i = 0; i < s.length(); i++) {
                 for (int j = 0; j < p.length(); j++) {
                     if (p.charAt(j) == '.' || p.charAt(j) == s.charAt(i) ) {
-                        dp[i + 1][j + 1] = dp[i][j];
+                        dp[i + 1][j + 1] |= dp[i][j];
                     }
                     if (p.charAt(j) == '*') {
                         // don't match
-                        dp[i + 1][j + 1] = dp[i + 1][j - 1];
+                        dp[i + 1][j + 1] |= dp[i + 1][j - 1];
                         // can match
                         if ( p.charAt(j - 1) == '.' || p.charAt(j - 1) == s.charAt(i)) {
                             dp[i + 1][j + 1] |=  dp[i][j + 1];

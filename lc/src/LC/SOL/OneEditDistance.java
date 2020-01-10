@@ -30,7 +30,7 @@ public class OneEditDistance {
             if (Math.abs(s.length() - t.length()) > 1) return false;
             if (s.length() == t.length()) return isOneReplace(s, t);
             if (s.length() > t.length()) return isOneDel(t, s);
-            return isOneDel(s, t);
+            else return isOneDel(s, t);
         }
 
         private boolean isOneReplace(String s, String t) {

@@ -21,11 +21,9 @@ public class ConstructBinaryTreefromPreorderandInorderTraversal {
                 }
             }
             int leftLen = rootIndex - inStart;
-            TreeNode left = build(preorder, pStart + 1, pStart + leftLen, inorder, inStart, rootIndex - 1 );
-            TreeNode right = build(preorder, pStart + leftLen + 1 , pEnd, inorder, rootIndex + 1 , inEnd);
             TreeNode root = new TreeNode(rootValue);
-            root.left = left;
-            root.right = right;
+            root.left = build(preorder, pStart + 1, pStart + leftLen, inorder, inStart, rootIndex - 1 );
+            root.right = build(preorder, pStart + leftLen + 1 , pEnd, inorder, rootIndex + 1 , inEnd);
             return root;
         }
     }

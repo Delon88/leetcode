@@ -25,6 +25,53 @@ public class MaxStack {
 //             stack.pop(); -> 1
 //             stack.top(); -> 5
 
+    class Solution {
+        Stack<Integer> stack;
+        Stack<Integer> maxStack;
+        /** initialize your data structure here. */
+        public MaxStack() {
+            stack = new Stack<>();
+            maxStack = new Stack<>();
+        }
+
+        public void push(int x) {
+            pushHelper(x);
+        }
+
+        void pushHelper(int x) {
+            int tmp =  maxStack.isEmpty() ? Integer.MIN_VALUE :maxStack.peek();
+            maxStack.push(Math.max(tmp, x));
+            stack.push(x);
+        }
+
+        public int pop() {
+            maxStack.pop();
+            return stack.pop();
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int peekMax() {
+            return maxStack.peek();
+        }
+
+        public int popMax() {
+            Stack<Integer> tmp = new Stack<Integer>();
+            int max = maxStack.peek();
+            while ( stack.peek() != max) {
+                tmp.push(stack.pop());
+                maxStack.pop();
+            }
+            stack.pop(); maxStack.pop();
+            while ( !tmp.isEmpty()) {
+                pushHelper(tmp.pop());
+            }
+            return max;
+        }
+    }
+
     public static void main(String[] args) {
         MaxStack stack = new MaxStack();
         stack.push(5);

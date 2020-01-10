@@ -14,15 +14,15 @@ public class CombinationSumII {
             return ret;
         }
 
-        void dfs(int[] cands, int remain, int start, List<Integer> tmp, List<List<Integer>> ret) {
-            if (remain < 0) return;
-            if (0 == remain) {
+        void dfs(int[] cands, int sum, int start, List<Integer> tmp, List<List<Integer>> ret) {
+            if (sum < 0) return;
+            if (0 == sum) {
                 ret.add(new ArrayList<>(tmp));
                 return;
             }
             for (int i = start; i < cands.length; i++) {
                 tmp.add(cands[i]);
-                dfs(cands, remain - cands[i], i + 1, tmp, ret);
+                dfs(cands, sum - cands[i], i + 1, tmp, ret);
                 tmp.remove(tmp.size() - 1);
                 while (i < cands.length - 1 && cands[i] == cands[i + 1]) {
                     i++;

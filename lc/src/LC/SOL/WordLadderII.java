@@ -9,25 +9,21 @@ public class WordLadderII {
             if ( beginWord.equals(endWord) || beginWord.length() != endWord.length() ) return ret;
             Set<String> dict = new HashSet<>(wordList);
             if ( !dict.contains(endWord)) return ret;
-            Map<String,Set<String>> backTrack = new HashMap<>();
-            Map<String,Integer> ladder = new HashMap<>();
-            backTrack.put(beginWord, null);
             int level = 0 ;
-            ladder.put(beginWord, level);
-            Queue<String> q = new LinkedList<>();
-            q.offer(beginWord);
+            Map<String,Set<String>> backTrack = new HashMap<>(); backTrack.put(beginWord, null);
+            Map<String,Integer> ladder = new HashMap<>(); ladder.put(beginWord, level);
+            Queue<String> q = new LinkedList<>(); q.offer(beginWord);
             boolean found = false;
             while ( !q.isEmpty() && !found) {
-                int size = q.size();
                 level++;
-                for ( int k = 0 ; k < size ; k++) {
+                for ( int k = q.size() ; k > 0  ; k--) {
                     String parent = q.poll();
                     char[] pWord = parent.toCharArray();
                     for ( int i = 0 ; i < pWord.length ;i++) {
-                        for ( char j = 'a' ;  j <= 'z' ; j++) {
-                            if ( j == pWord[i]) continue;
+                        for ( char c = 'a' ;  c <= 'z' ; c++) {
+                            if ( c == pWord[i]) continue;
                             char tmp = pWord[i];
-                            pWord[i] = j;
+                            pWord[i] = c;
                             String child = new String(pWord);
                             if ( child.equals(endWord)) {
                                 found = true;
@@ -55,9 +51,7 @@ public class WordLadderII {
         }
 
         void put(Map<String, Set<String>> backTrack, String parent, String child) {
-            if (!backTrack.containsKey(child)) {
-                backTrack.put(child, new HashSet<>());
-            }
+            backTrack.putIfAbsent(child, new HashSet<>());
             backTrack.get(child).add(parent);
         }
 

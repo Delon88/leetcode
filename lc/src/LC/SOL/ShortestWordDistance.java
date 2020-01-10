@@ -11,7 +11,7 @@ public class ShortestWordDistance {
             Map<String,List<Integer>> map = new HashMap<>();
             for ( int i = 0 ;  i < words.length ; i++) {
                 String w = words[i];
-                if ( !map.containsKey(w)) map.put(w, new ArrayList<>());
+                map.putIfAbsent(w , new ArrayList<>());
                 map.get(w).add(i);
             }
             int i1 = 0 , i2 = 0;

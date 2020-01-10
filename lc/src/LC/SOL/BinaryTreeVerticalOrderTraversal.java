@@ -26,9 +26,7 @@ public class BinaryTreeVerticalOrderTraversal {
             int min = 0, max = 0;
             while ( !q.isEmpty()) {
                 Pair p = q.poll();
-                if ( !map.containsKey(p.vIndex)) {
-                    map.put(p.vIndex, new ArrayList<>());
-                }
+                map.putIfAbsent(p.vIndex, new ArrayList<>());
                 map.get(p.vIndex).add(p.node.val);
                 if ( p.node.left != null ) {
                     q.offer(new Pair(p.node.left, p.vIndex -1));

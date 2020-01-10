@@ -39,9 +39,8 @@ public class RemoveInvalidParentheses {
                 for( int i = 0 ;i < cand.length() ; i++) {
                     if ( cand.charAt(i) == '(' || cand.charAt(i) == ')') {
                         String next = cand.substring(0 , i ) + cand.substring(i + 1);
-                        if ( !v.contains(next)) {
+                        if ( v.add(next)) {
                             q.offer(next);
-                            v.add(next);
                         }
                     }
                 }

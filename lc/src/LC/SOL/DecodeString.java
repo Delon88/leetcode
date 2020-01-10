@@ -1,35 +1,40 @@
 package LC.SOL;
 
 
-public class DecodeString {
-    public class Solution {
-        public String decodeString(String s) {
-            int[] i = {0};
-            return decode(s, i);
-        }
+import java.util.Stack;
 
-        private String decode(String s, int[] i) {
-            StringBuilder res = new StringBuilder();
-            while (i[0] < s.length() && s.charAt(i[0]) != ']') {
-                if (Character.isDigit(s.charAt(i[0]))) {
-                    int n = 0;
-                    while ( i[0] < s.length() && Character.isDigit(s.charAt(i[0]))) {
-                        n = n * 10 + ( s.charAt(i[0]) - '0');
-                        i[0]++;
+public class DecodeString {
+    class Solution {
+        public String decodeString(String s) {
+            String res = "";
+            Stack<Integer> countStack = new Stack<>();
+            Stack<String> resStack = new Stack<>();
+            int i = 0;
+            while (i < s.length()) {
+                if (Character.isDigit(s.charAt(i))) {
+                    int count = 0;
+                    while (Character.isDigit(s.charAt(i))) {
+                        count = 10 * count + (s.charAt(i) - '0');
+                        i++;
                     }
-                    // skip [
-                    i[0]++;
-                    String repeat = decode(s, i );
-                    // skip ]
-                    i[0]++;
-                    while ( n-- > 0 ) {
-                        res.append(repeat);
+                    countStack.push(count);
+                } else if (s.charAt(i) == '[') {
+                    resStack.push(res);
+                    res = "";
+                    i++;
+                } else if (s.charAt(i) == ']') {
+                    StringBuilder temp = new StringBuilder(resStack.pop());
+                    int repeatTimes = countStack.pop();
+                    for (int j = 0; j < repeatTimes; j++) {
+                        temp.append(res);
                     }
+                    res = temp.toString();
+                    i++;
                 } else {
-                    res.append(s.charAt(i[0]++));
+                    res += s.charAt(i++);
                 }
             }
-            return res.toString();
+            return res;
         }
     }
 }

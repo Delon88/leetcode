@@ -6,19 +6,19 @@ import java.util.*;
 public class EvaluateDivision {
 
     public class DFSSolution {
-        public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
+        public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
             Map<String,Map<String,Double>> map = new HashMap<>();
-            for ( int i = 0 ; i < equations.length; i++) {
-                String[] e = equations[i];
-                map.putIfAbsent(e[0] , new HashMap<>());
-                map.putIfAbsent(e[1] , new HashMap<>());
-                map.get(e[0]).put(e[1], values[i]);
-                map.get(e[1]).put(e[0], 1.0d / values[i]);
+            for ( int i = 0 ; i < equations.size(); i++) {
+                List<String> e = equations.get(i);
+                map.putIfAbsent(e.get(0) , new HashMap<>());
+                map.putIfAbsent(e.get(1) , new HashMap<>());
+                map.get(e.get(0)).put(e.get(1), values[i]);
+                map.get(e.get(1)).put(e.get(0), 1.0d / values[i]);
             }
-            double[] ret = new double[queries.length];
-            for ( int i = 0; i < queries.length ; i++) {
-                String[] q = queries[i];
-                ret[i] = dfs(q[0], q[1], 1, map, new HashSet<>());
+            double[] ret = new double[queries.size()];
+            for ( int i = 0; i < queries.size() ; i++) {
+                List<String> q = queries.get(i);
+                ret[i] = dfs(q.get(0), q.get(1), 1, map, new HashSet<>());
             }
             return ret;
         }

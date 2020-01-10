@@ -21,18 +21,10 @@ public class EncodeandDecodeStrings {
             if (s.length() == 0) return words;
             int i = 0;
             while (i < s.length()) {
-                int len = 0;
-                while (s.charAt(i) != '#') {
-                    len = len * 10 + (s.charAt(i) - '0');
-                    i++;
-                }
-                i++;
-                if (len != 0) {
-                    words.add(s.substring(i, i + len));
-                } else {
-                    words.add("");
-                }
-                i += len;
+                int d = s.indexOf("#", i);
+                int len = Integer.parseInt(s.substring(i , d));
+                i = d + 1 + len;
+                words.add(s.substring(d + 1, i));
             }
             return words;
         }

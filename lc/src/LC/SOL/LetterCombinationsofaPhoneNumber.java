@@ -4,19 +4,7 @@ import java.util.*;
 
 public class LetterCombinationsofaPhoneNumber {
     class Solution {
-        Map<Character, String> map = new HashMap<Character, String>();
-
-        {
-            map.put('2', "abc");
-            map.put('3', "def");
-            map.put('4', "ghi");
-            map.put('5', "jkl");
-            map.put('6', "mno");
-            map.put('7', "pqrs");
-            map.put('8', "tuv");
-            map.put('9', "wxyz");
-        }
-
+        String[] letters = {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
         public List<String> letterCombinations(String digits) {
             List<String> ret = new ArrayList<>();
             if (digits.length() == 0) return ret;
@@ -30,9 +18,9 @@ public class LetterCombinationsofaPhoneNumber {
                 return;
             }
 
-            String letters = map.get(digits.charAt(start));
-            for (int i = 0; i < letters.length(); i++) {
-                tmp[start] = letters.charAt(i);
+            String next = letters[digits.charAt(start) - '0'];
+            for (int i = 0; i < next.length(); i++) {
+                tmp[start] = next.charAt(i);
                 dfs(digits, start + 1, tmp, ret);
             }
         }

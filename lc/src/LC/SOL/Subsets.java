@@ -7,23 +7,18 @@ import java.util.List;
 public class Subsets {
     class Solution {
         public List<List<Integer>> subsets(int[] nums) {
-            Arrays.sort(nums);
             List<List<Integer>> ret = new ArrayList<>();
             ret.add(new ArrayList<>());
-            dfs(nums, new ArrayList<>(), 0 , ret);
+            dfs(nums, new ArrayList<>(), 0, ret);
             return ret;
         }
 
-        void dfs(int[] nums, List<Integer> tmp, int start, List<List<Integer>> ret ) {
-
-            for ( int i = start ; i < nums.length ; i++) {
+        void dfs(int[] nums, List<Integer> tmp, int start, List<List<Integer>> ret) {
+            for (int i = start; i < nums.length; i++) {
                 tmp.add(nums[i]);
                 ret.add(new ArrayList<>(tmp));
-                dfs(nums, tmp, i + 1 , ret);
+                dfs(nums, tmp, i + 1, ret);
                 tmp.remove(tmp.size() - 1);
-                while ( i < nums.length - 1&& nums[i] == nums[i + 1]) {
-                    i++;
-                }
             }
         }
     }

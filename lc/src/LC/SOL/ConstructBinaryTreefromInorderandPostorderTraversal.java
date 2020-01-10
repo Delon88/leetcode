@@ -16,16 +16,13 @@ public class ConstructBinaryTreefromInorderandPostorderTraversal {
             int rootIndex = -1;
             for ( int i = inStart ; i <= inEnd ; i++) {
                 if ( inorder[i] == rootValue ) {
-                    rootIndex = i;
-                    break;
+                    rootIndex = i; break;
                 }
             }
             int leftLen = rootIndex - inStart;
-            TreeNode left = build(inorder, inStart, rootIndex -1, postorder, pStart, pStart + leftLen -1 );
-            TreeNode right = build(inorder, rootIndex + 1 , inEnd, postorder, pStart + leftLen, pEnd - 1);
             TreeNode root = new TreeNode(rootValue);
-            root.left = left ;
-            root.right =right;
+            root.left = build(inorder, inStart, rootIndex -1, postorder, pStart, pStart + leftLen -1 );
+            root.right = build(inorder, rootIndex + 1 , inEnd, postorder, pStart + leftLen, pEnd - 1);
             return root;
         }
     }

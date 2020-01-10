@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class SerializeandDeserializeBinaryTree {
     class Codec {
 
-        String delimitter = ",";
+        String d = ",";
 
         // Encodes a tree to a single string.
         public String serialize(TreeNode root) {
@@ -18,10 +18,10 @@ public class SerializeandDeserializeBinaryTree {
 
         void ser(TreeNode root, StringBuilder b) {
             if (root == null) {
-                b.append("#").append(delimitter);
+                b.append("#").append(d);
                 return;
             }
-            b.append(root.val).append(delimitter);
+            b.append(root.val).append(d);
             ser(root.left, b);
             ser(root.right, b);
         }
@@ -29,7 +29,7 @@ public class SerializeandDeserializeBinaryTree {
         // Decodes your encoded data to tree.
         public TreeNode deserialize(String data) {
             Scanner sc = new Scanner(data);
-            sc.useDelimiter(delimitter);
+            sc.useDelimiter(d);
             return des(sc);
         }
 

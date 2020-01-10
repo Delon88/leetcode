@@ -2,33 +2,31 @@ package LC.SOL;
 
 import LC.DS.Point;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MaxPointsonaLine {
     class Solution {
-        public int maxPoints(Point[] points) {
-            if ( points.length == 1) return 1;
-            int max = 0 ;
-            Map<String,Integer> map = new HashMap<>();
-            for ( int i = 0 ; i < points.length - 1 ; i++) {
-                // slope -> number of points
+        public int maxPoints(int[][] points) {
+            if ( points.length == 1 ) return 1;
+            int max = 0;
+            Map<String, Integer> map = new HashMap<>();
+            for (int i = 0; i < points.length - 1; i++) {
                 map.clear();
-                int dup = 0;
-                int lineMax = 1;
-                for ( int j = i + 1 ; j < points.length; j++) {
-                    Point p1 = points[i], p2 = points[j];
-                    if ( p1.x == p2.x && p1.y == p2.y) {
+                int lineMax = 1, dup = 0;
+                for (int j = i + 1; j < points.length; j++) {
+                    int[] p1 = points[i], p2 = points[j];
+                    if (Arrays.equals(p1 , p2)) {
                         dup++;continue;
                     }
-                    int dx = p2.x - p1.x;
-                    int dy = p2.y - p1.y;
-                    int gcd = gcd(dx , dy);
-                    if ( gcd != 0 ) {
-                         dx = dx / gcd; dy = dy / gcd;
+                    int dy = p2[1] - p1[1] , dx = p2[0] - p1[0];
+                    int gcd = gcd(dy , dx);
+                    if ( gcd != 0  ) {
+                        dy /= gcd; dx /= gcd;
                     }
-                    String slope = dx + "_" + dy;
-                    map.put(slope, map.getOrDefault(slope, 1) + 1);
+                    String slope = dy + "/" + dx;
+                    map.put(slope, map.getOrDefault(slope , 1 ) + 1);
                     lineMax = Math.max(lineMax, map.get(slope));
                 }
                 max = Math.max(max, lineMax + dup);
@@ -36,8 +34,8 @@ public class MaxPointsonaLine {
             return max;
         }
 
-        int gcd( int a , int b) {
-            if ( b == 0 ) return a;
+        int gcd(int a, int b) {
+            if (b == 0) return a;
             else return gcd(b, a % b);
         }
     }

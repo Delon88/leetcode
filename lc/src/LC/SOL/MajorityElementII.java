@@ -1,65 +1,51 @@
 package LC.SOL;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class MajorityElementII {
     static class Solution {
 
-        class Node {
-            public int ele;
-            public int count;
-        }
         public List<Integer> majorityElement(int[] nums) {
-            Node[] a = new Node[2];
-            a[0] = new Node();
-            a[1] = new Node();
-            for ( int i = 0 ;i < nums.length ; i++) {
-                int j = 0;
-                for ( ; j < 2 ; j++) {
-                    if ( a[j].ele == nums[i]) {
-                        a[j].count += 1;
-                        break;
+            int len = nums.length,  k = 3 ;
+            List<Integer> ret = new ArrayList<>();
+            if ( len == 0 ) return ret;
+            int[] count = new int[k - 1], ele = new int[k - 1];
+            for ( int n : nums ) {
+                boolean placed = false;
+                // find if it's already major
+                for ( int i = 0 ; i < k - 1  ; i++) {
+                    if ( ele[i] == n ) {
+                        count[i]++; placed = true; break;
                     }
                 }
-                // if not in the array, find if there is available slot
-                if ( j == 2 ) {
-                    int l = 0;
-                    for ( ; l < 2 ; l++) {
-                        if ( a[l].count == 0 ) {
-                            a[l].ele = nums[i];
-                            a[l].count = 1;
-                            break;
-                        }
+                if ( placed ) continue;
+                // find if there is available slot
+                for ( int i = 0 ; i < k - 1; i++) {
+                    if ( count[i] == 0 ) {
+                        count[i]++;ele[i] = n;placed = true;break;
                     }
-                    // no available slot, minus 1 to all elements
-                    if ( l == 2 ) {
-                        for ( int k = 0 ;  k < 2 ; k++) {
-                            a[k].count--;
-                        }
+                }
+                if ( placed ) continue;
+                // minus 1 for all ele
+                for ( int i = 0 ; i < k - 1; i++) count[i]--;
+            }
+            Arrays.fill(count, 0 );
+            for ( int n : nums ) {
+                for ( int i = 0 ; i < k - 1 ; i++) {
+                    if ( n == ele[i]) {
+                        count[i]++;break;
                     }
                 }
             }
-            Set<Integer> set = new HashSet<>();
-            for ( int i = 0 ;i < 2 ; i++) {
-                int ac = 0;
-                for ( int j = 0 ;  j < nums.length; j++) {
-                    if ( nums[j] == a[i].ele ) {
-                        ac++;
-                    }
-                }
-                if ( ac > nums.length / 3 ) {
-                    set.add(a[i].ele);
-                }
+            for ( int i = 0 ; i < k - 1 ; i++) {
+                if ( count[i] > len / k ) ret.add(ele[i]);
             }
-            return new ArrayList<>(set);
+            return ret;
         }
     }
 
     public static void main(String[] args) {
-        int[] n = {1,2,3};
+        int[] n = {1, 2, 3};
         System.out.println(new Solution().majorityElement(n));
     }
 }

@@ -2,26 +2,37 @@ package LC.SOL;
 
 import LC.DS.UndirectedGraphNode;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class CloneGraph {
     public class Solution {
-        public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-            if ( node == null ) return null;
-            Map<Integer,UndirectedGraphNode> map = new HashMap<>();
-            return clone(node, map);
+        public Node cloneGraph(Node node) {
+            if (node == null) return node;
+            Map<Integer, Node> v = new HashMap<>();
+            return clone(v , node);
         }
 
-        UndirectedGraphNode clone(UndirectedGraphNode node, Map<Integer,UndirectedGraphNode> map) {
-            if ( map.containsKey(node.label)) return map.get(node.label);
-            UndirectedGraphNode newNode = new UndirectedGraphNode(node.label);
-            map.put(node.label, newNode);
-            for ( UndirectedGraphNode nei : node.neighbors) {
-                newNode.neighbors.add(clone(nei, map));
+        Node clone(Map<Integer, Node> v, Node node) {
+            if ( v.containsKey(node.val)) return v.get(node.val);
+            Node clone = new Node(node.val, new ArrayList<>());
+            v.put(node.val , clone);
+            for ( Node nei : node.neighbors) {
+                clone.neighbors.add(clone(v , nei));
             }
-            return newNode;
+            return clone;
+        }
+    }
+
+    class Node {
+        public int val;
+        public List<Node> neighbors;
+
+        public Node() {
+        }
+
+        public Node(int _val, List<Node> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
         }
     }
 }

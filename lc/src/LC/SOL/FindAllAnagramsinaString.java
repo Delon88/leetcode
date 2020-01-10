@@ -12,18 +12,11 @@ public class FindAllAnagramsinaString {
             for ( int i = 0  ; i < p.length() ; i++) {
                 count[p.charAt(i)]++;
             }
-            int start = 0 , end = 0;
-            while ( end < s.length()) {
-                if ( count[s.charAt(end)] >= 1 ) toFind--;
-                count[s.charAt(end)]--;
-                end++;
-                if ( toFind == 0 ) list.add(start);
-                if ( end - start == p.length() ) {
-                    if ( count[s.charAt(start)] >= 0 ) {
-                        toFind++;
-                    }
-                    count[s.charAt(start)]++;
-                    start++;
+            for ( int i = 0 ; i < s.length(); i++) {
+                if ( count[s.charAt(i)]-- >= 1) toFind--;
+                if ( toFind == 0 ) list.add(i - p.length() + 1);
+                if ( i >= p.length() - 1 ) {
+                    if (count[s.charAt(i - p.length() + 1)]++ >= 0 ) toFind++;
                 }
             }
             return list;
