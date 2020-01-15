@@ -17,8 +17,7 @@ public class MergeTwoSortedLists {
                 }
                 cur = cur.next;
             }
-            ListNode remain = l1 == null ? l2 : l1;
-            cur.next = remain;
+            cur.next = l1 == null ? l2 : l1;
             return dummyHead.next;
         }
     }

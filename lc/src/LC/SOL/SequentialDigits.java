@@ -1,5 +1,6 @@
 package LC.SOL;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class SequentialDigits {
@@ -20,7 +21,7 @@ public class SequentialDigits {
                         res = len++;
                 }
             }
-
+            BigInteger
             return res;
         }
     }
