@@ -8,12 +8,13 @@ public class FizzBuzz {
         public List<String> fizzBuzz(int n) {
             List<String> ret = new ArrayList<>();
             for (int i = 1; i <= n; i++) {
-                boolean div3 = (i % 3) == 0;
-                boolean div5 = (i % 5) == 0;
-                if (!div3 && !div5) ret.add(Integer.toString(i));
-                else if (div3 && div5) ret.add("FizzBuzz");
-                else if (div3) ret.add("Fizz");
-                else if (div5) ret.add("Buzz");
+                boolean f3 = (i % 3 == 0) ? true : false;
+                boolean f5 = (i % 5 == 0) ? true : false;
+                StringBuilder b = new StringBuilder();
+                if (f3) b.append("Fizz");
+                if (f5) b.append("Buzz");
+                if (!f3 && !f5) b.append(i);
+                ret.add(b.toString());
             }
             return ret;
         }

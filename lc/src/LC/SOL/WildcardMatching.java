@@ -2,34 +2,36 @@ package LC.SOL;
 
 public class WildcardMatching {
     class Solution {
-        public boolean isMatch(String s, String p) {
-            int sCur = 0;
-            int pCur = 0;
-            int lastStar = -1;
-            int lastMatch = 0;
-            while ( sCur < s.length() ) {
+        boolean isMatch(String str, String pattern) {
+            int s = 0, p = 0, match = 0, starIdx = -1;
+            while (s < str.length()) {
                 // advancing both pointers
-                if ( pCur < p.length() && (p.charAt(pCur) == '?' || s.charAt(sCur) == p.charAt(pCur))) {
-                    sCur++;
-                    pCur++;
-                } else if ( pCur < p.length() && p.charAt(pCur) == '*' ) {
-                    // * found, only advancing pattern pointer
-                    lastMatch = sCur;
-                    lastStar = pCur;
-                    pCur++;
-                } else if ( lastStar != -1 ) {
-                    // last pattern pointer was *, advancing string pointer
-                    pCur = lastStar + 1;
-                    sCur = lastMatch + 1;
-                    lastMatch++;
-                } else {
-                    return false;
+                if (p < pattern.length() && (pattern.charAt(p) == '?' || str.charAt(s) == pattern.charAt(p))) {
+                    s++;
+                    p++;
                 }
+                // * found, only advancing pattern pointer
+                else if (p < pattern.length() && pattern.charAt(p) == '*') {
+                    starIdx = p;
+                    match = s;
+                    p++;
+                }
+                // last pattern pointer was *, advancing string pointer
+                else if (starIdx != -1) {
+                    p = starIdx + 1;
+                    match++;
+                    s = match;
+                }
+                //current pattern pointer is not star, last patter pointer was not *
+                //characters do not match
+                else return false;
             }
 
-            while ( pCur < p.length() && p.charAt(pCur) == '*') pCur++;
+            //check for remaining characters in pattern
+            while (p < pattern.length() && pattern.charAt(p) == '*')
+                p++;
 
-            return pCur == p.length();
+            return p == pattern.length();
         }
     }
 }

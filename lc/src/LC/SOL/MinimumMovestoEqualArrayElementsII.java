@@ -6,20 +6,14 @@ public class MinimumMovestoEqualArrayElementsII {
     class Solution {
         public int minMoves2(int[] nums) {
             Arrays.sort(nums);
-            if (nums.length <= 1) return 0;
-            int sum = 0, n = nums.length;
-
-            int median = 0;
-            if (n % 2 == 0) {
-                median = (nums[n / 2 - 1] + nums[n / 2]) / 2;
-            } else {
-                median = nums[n / 2];
+            int i = 0, j = nums.length-1;
+            int count = 0;
+            while(i < j){
+                count += nums[j]-nums[i];
+                i++;
+                j--;
             }
-            int ret = 0;
-            for ( int i : nums) {
-                ret+= Math.abs(i - median);
-            }
-            return ret;
+            return count;
         }
     }
 }

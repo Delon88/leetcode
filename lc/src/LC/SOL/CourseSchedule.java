@@ -6,7 +6,7 @@ public class CourseSchedule {
     class Solution {
         public boolean canFinish(int numCourses, int[][] prerequisites) {
             Map<Integer, Set<Integer>> graph = new HashMap<>();
-            for ( int i = 0 ;i < numCourses; i++) {
+            for (int i = 0; i < numCourses; i++) {
                 graph.put(i, new HashSet<>());
             }
             for (int[] p : prerequisites) {
@@ -32,67 +32,25 @@ public class CourseSchedule {
         }
     }
 
-
-    class Point {
-        int x , y;
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<Integer>[] neigh = new LinkedList[numCourses];
+        Queue<Integer> queue = new LinkedList<>();
+        int[] indegree = new int[numCourses];
+        int count = 0;
+        for (int i = 0; i < numCourses; i++) neigh[i] = new LinkedList<>();
+        for (int[] pair : prerequisites) {
+            neigh[pair[1]].add(pair[0]);
+            indegree[pair[0]]++;
         }
-    }
-    private final char SEA = '0';
-    private final char ISLAND = '1';
-
-    int row;
-    int col;
-
-    private int[] dx = {0, 0, 1, -1};
-    private int[] dy = {1, -1, 0, 0};
-
-    // return number of islands
-    public int numIslands(char[][] grid) {
-        if (grid == null || grid.length == 0 || grid[0].length == 0) {
-            return 0;
-        }
-
-        row = grid.length;
-        col = grid[0].length;
-
-        int number = 0;
-
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                if (grid[i][j] == ISLAND) {
-                    traverse(grid, i, j);
-                    number++;
-                }
-            }
-        }
-
-        return number;
-    }
-
-    private void traverse(char[][] grid, int x, int y) {
-        Queue<Point> queue = new LinkedList<>();
-        queue.offer(new Point(x, y));
-        grid[x][y] = SEA;
-
+        for (int i = 0; i < indegree.length; i++)
+            if (indegree[i] == 0) queue.offer(i);
         while (!queue.isEmpty()) {
-            Point cur = queue.poll();
-
-            for (int i = 0; i < 4; i++) {
-                Point adj = new Point(cur.x + dx[i], cur.y + dy[i]);
-
-                if (canMove(grid, adj)) {
-                    queue.offer(adj);
-                    grid[adj.x][adj.y] = SEA;
-                }
-            }
+            int course = queue.poll();
+            count++;
+            for (int adj : neigh[course])
+                if (--indegree[adj] == 0) queue.offer(adj);
         }
-    }
-
-    private boolean canMove(char[][] grid, Point adj) {
-        return 0 <= adj.x && adj.x < row && 0 <= adj.y && adj.y < col && grid[adj.x][adj.y] == ISLAND;
+        return count == numCourses;
     }
 
 }

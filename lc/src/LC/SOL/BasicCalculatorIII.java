@@ -1,9 +1,11 @@
 package LC.SOL;
 
+import java.math.BigInteger;
 import java.util.Stack;
 
 public class BasicCalculatorIII {
     class Solution {
+        BigInteger
         public int calculate(String s) {
             int l1 = 0, o1 = 1;
             int l2 = 1, o2 = 1;
@@ -29,6 +31,10 @@ public class BasicCalculatorIII {
                 } if ( c == '*' || c == '/') {
                     o2 = (c == '*' ? 1: -1);
                 } else if ( c == '-' || c == '+') {
+                    if (c == '-' && (i == 0 || s.charAt(i - 1) == '(')) {
+                        o1 = -1;
+                        continue;
+                    }
                     l1 = l1 + o1 * l2;
                     o1 = ( c  == '+' ? 1: -1);
                     l2 = 1 ; o2 = 1;

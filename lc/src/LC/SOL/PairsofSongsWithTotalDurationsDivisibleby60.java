@@ -1,6 +1,8 @@
 package LC.SOL;
 
 
+import java.io.File;
+
 public class PairsofSongsWithTotalDurationsDivisibleby60 {
     class Solution {
         public int numPairsDivisibleBy60(int[] time) {
@@ -12,6 +14,8 @@ public class PairsofSongsWithTotalDurationsDivisibleby60 {
                 count[m] += 1;
             }
             return ret;
+            File f = new File("");
+            f.isFile();
         }
     }
 }

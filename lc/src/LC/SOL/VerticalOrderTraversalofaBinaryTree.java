@@ -7,6 +7,7 @@ import java.util.*;
 public class VerticalOrderTraversalofaBinaryTree {
     class Solution {
         public List<List<Integer>> verticalTraversal(TreeNode root) {
+            // ( x, ( y -> pq of values) )
             TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map = new TreeMap<>();
             dfs(root, 0, 0, map);
             List<List<Integer>> ret = new ArrayList<>();

@@ -22,8 +22,8 @@ public class AccountsMerge {
             Set<String> v = new HashSet<>();
             List<List<String>> ret = new LinkedList<>();
             for ( String email : emailToAct.keySet()) {
-                List<String> merge = new LinkedList<>();
                 if ( v.add(email)) {
+                    List<String> merge = new LinkedList<>();
                     dfs(graph, v,   email, merge);
                     Collections.sort(merge);
                     merge.add(0, emailToAct.get(email));

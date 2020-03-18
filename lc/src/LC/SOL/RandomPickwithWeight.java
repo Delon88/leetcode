@@ -5,31 +5,29 @@ import java.util.Random;
 public class RandomPickwithWeight {
     class Solution {
 
-        Random random;
-        int[] wSums;
-
+        int[] w;
+        Random rn = new Random();
         public Solution(int[] w) {
-            this.random = new Random();
-            for (int i = 1; i < w.length; ++i)
-                w[i] += w[i - 1];
-            this.wSums = w;
+            this.w = w;
+            for ( int i = 1; i < w.length; i++) {
+                w[i] += w[i-1];
+            }
         }
 
         public int pickIndex() {
-            int len = wSums.length;
-            int idx = random.nextInt(wSums[len - 1]) + 1;
-            int left = 0, right = len - 1;
-            // search position
-            while (left < right) {
-                int mid = left + (right - left) / 2;
-                if (wSums[mid] == idx)
-                    return mid;
-                else if (wSums[mid] < idx)
-                    left = mid + 1;
-                else
-                    right = mid;
+            int n = w.length;
+            int target = rn.nextInt(w[n - 1]) + 1;
+            int start = 0, end = n - 1;
+            while ( start < end ) {
+                int mid = start + ( end - start) / 2;
+                if ( w[mid] >= target ) {
+                    end = mid;
+                } else {
+                    start = mid + 1;
+                }
             }
-            return left;
+            if ( !(w[start] >= target) ) return n - 1;
+            return start;
         }
     }
 }

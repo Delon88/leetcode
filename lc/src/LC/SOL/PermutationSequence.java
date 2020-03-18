@@ -6,26 +6,20 @@ import java.util.List;
 public class PermutationSequence {
     class Solution {
         public String getPermutation(int n, int k) {
-            List<Integer> list = new ArrayList<>();
-            for ( int i = 1 ;i <= n ; i++) {
-                list.add(i);
-            }
-
-            StringBuilder b = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
+            ArrayList<Integer> num = new ArrayList<>();
             int fact = 1;
-            for ( int i  = 2 ; i < n ; i++) {
+            for (int i = 1; i <= n; i++) {
                 fact *= i;
+                num.add(i);
             }
-            k--;
-            for ( int i = n - 1 ; i > 0 ; i--) {
-                int index = k / fact;
-                b.append(list.get(index));
-                list.remove(index);
-                k %= fact;
-                fact /= i;
+            for (int i = 0, l = k - 1; i < n; i++) {
+                fact /= (n - i);
+                int index = (l / fact);
+                sb.append(num.remove(index));
+                l -= index * fact;
             }
-            b.append(list.get(0));
-            return b.toString();
+            return sb.toString();
         }
     }
 }

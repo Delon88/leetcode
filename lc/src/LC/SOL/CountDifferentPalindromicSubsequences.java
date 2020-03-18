@@ -26,10 +26,21 @@ public class CountDifferentPalindromicSubsequences {
                             high--;
                         }
                         if (low > high) {
-                            // a[...]a
+                            // consider the string from i to j is "a...a" "a...a"... where there is no character 'a' inside the leftmost and rightmost 'a'
+                         /* eg:  "aba" while i = 0 and j = 2:  dp[1][1] = 1 records the palindrome{"b"},
+                         the reason why dp[i + 1][j  - 1] * 2 counted is that we count dp[i + 1][j - 1] one time as {"b"},
+                         and additional time as {"aba"}. The reason why 2 counted is that we also count {"a", "aa"}.
+                         So totally dp[i][j] record the palindrome: {"a", "b", "aa", "aba"}.
+                         */
                             dp[i][j] = dp[i + 1][j - 1] * 2 + 2;
                         } else if (low == high) {
-                            // a[..a...]a
+                            // consider the string from i to j is "a...a" "a...a"... where there is no character 'a' inside the leftmost and rightmost 'a'
+                         /* eg:  "aba" while i = 0 and j = 2:  dp[1][1] = 1 records the palindrome{"b"},
+                         the reason why dp[i + 1][j  - 1] * 2 counted is that we count dp[i + 1][j - 1] one time as {"b"},
+                         and additional time as {"aba"}. The reason why 2 counted is that we also count {"a", "aa"}.
+                         So totally dp[i][j] record the palindrome: {"a", "b", "aa", "aba"}.
+                         */
+
                             dp[i][j] = dp[i + 1][j - 1] * 2 + 1;
                         } else {
                             // a[..a..a..]a

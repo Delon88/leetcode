@@ -10,12 +10,12 @@ public class FlowerPlantingWithNoAdjacent {
             for ( int[] p : paths) { graph.get(p[0]).add(p[1]); graph.get(p[1]).add(p[0]); }
             int[] ret = new int[N];
             for ( int i = 1 ; i <= N ; i++) {
-                int[] used = new int[5];
+                boolean[] used = new boolean[5];
                 for ( int nei : graph.get(i)) {
-                    used[ret[nei - 1]] = 1;
+                    used[ret[nei - 1]] = true;
                 }
-                for ( int c = 4 ; c > 0 ; c--) {
-                    if ( used[c] == 0) ret[i - 1] = c;
+                for ( int c = 1 ; c <= 4 ; c++) {
+                    if ( !used[c]) ret[i - 1] = c;
                 }
             }
             return ret;

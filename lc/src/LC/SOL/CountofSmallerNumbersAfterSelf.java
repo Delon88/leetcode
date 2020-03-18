@@ -12,7 +12,6 @@ public class CountofSmallerNumbersAfterSelf {
                 this.val = val;
             }
         }
-
         public List<Integer> countSmaller(int[] nums) {
             List<Integer> res = new ArrayList<>();
             if (nums == null || nums.length == 0) {
@@ -28,7 +27,6 @@ public class CountofSmallerNumbersAfterSelf {
             res.addAll(Arrays.asList(smaller));
             return res;
         }
-
         private Pair[] mergeSort(Pair[] arr, Integer[] smaller) {
             if (arr.length <= 1) {
                 return arr;
@@ -36,7 +34,7 @@ public class CountofSmallerNumbersAfterSelf {
             int mid = arr.length / 2;
             Pair[] left = mergeSort(Arrays.copyOfRange(arr, 0, mid), smaller);
             Pair[] right = mergeSort(Arrays.copyOfRange(arr, mid, arr.length), smaller);
-            for (int i = 0, j = 0; i < left.length || j < right.length; ) {
+            for (int i = 0, j = 0; i < left.length || j < right.length;) {
                 if (j == right.length || i < left.length && left[i].val <= right[j].val) {
                     arr[i + j] = left[i];
                     smaller[left[i].index] += j;

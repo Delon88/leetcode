@@ -2,47 +2,48 @@ package LC.SOL;
 
 import LC.DS.TreeNode;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class SerializeandDeserializeBST {
     public class Codec {
-
+        String d = ",";
         // Encodes a tree to a single string.
         public String serialize(TreeNode root) {
             StringBuilder b = new StringBuilder();
-            ser(root, b);
+            ser(b , root);
             return b.toString();
         }
 
-        public void ser(TreeNode node, StringBuilder b) {
-            if (node == null) b.append('#').append(" ");
-            else {
-                b.append(node.val).append(' ');
-                ser(node.left, b);
-                ser(node.right, b);
-            }
+        void ser(StringBuilder b, TreeNode root) {
+            if ( root == null ) return;
+            b.append(root.val).append(d);
+            ser(b, root.left);
+            ser(b, root.right);
         }
-
 
         // Decodes your encoded data to tree.
         public TreeNode deserialize(String data) {
-            StringTokenizer token = new StringTokenizer(data, " ");
-            return des(token);
+            if ( data.length() == 0) return null;
+            String[] arr = data.split(d);
+            Queue<Integer> q = new LinkedList<>();
+            for ( String s : arr ) q.add(Integer.parseInt(s));
+            return des(q);
         }
 
-        public TreeNode des(StringTokenizer token) {
-            TreeNode node = null;
-            if (token.hasMoreTokens()) {
-                String t = token.nextToken();
-                if ("#".equals(t)) {
-                    return null;
-                } else {
-                    node = new TreeNode(Integer.parseInt(t));
-                    node.left = des(token);
-                    node.right = des(token);
-                }
+        TreeNode des(Queue<Integer> q) {
+            if (q.isEmpty()) return null;
+            int rValue = q.poll();
+            Queue<Integer> less = new LinkedList<>();
+            Queue<Integer> greater = new LinkedList<>();
+            while ( !q.isEmpty()) {
+                int v = q.poll();
+                if ( v < rValue ) less.offer(v); else greater.offer(v);
             }
-            return node;
+            TreeNode root =new TreeNode(rValue);
+            root.left = des(less); root.right = des(greater);
+            return root;
         }
     }
 }

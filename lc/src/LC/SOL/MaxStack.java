@@ -58,7 +58,7 @@ public class MaxStack {
         }
 
         public int popMax() {
-            Stack<Integer> tmp = new Stack<Integer>();
+            Stack<Integer> tmp = new Stack<>();
             int max = maxStack.peek();
             while ( stack.peek() != max) {
                 tmp.push(stack.pop());

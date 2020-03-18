@@ -13,17 +13,18 @@ public class RestoreIPAddresses {
         }
 
         void dfs(String s, List<String> tmp, int level, List<String> ret) {
-            if ( level == 4 && s.length() == 0) {ret.add("".join(".", tmp)); return;}
-            for ( int i = 1 ; i < 4 && i <= s.length(); i++) {
-                String ip = s.substring(0 , i);
-                if ( ip.charAt(0) == '0' && ip.length() != 1) continue;
-                int ipNum = Integer.parseInt(ip);
-                if ( ipNum >= 0 && ipNum <= 255) {
-                    tmp.add(ip);
-                    dfs(s.substring(i), tmp, level + 1 , ret);
-                    tmp.remove(tmp.size() - 1);
+            if ( level == 4 && s.length() == 0 ) {ret.add(String.join(".", tmp)); return;}
+            for ( int i = 1 ; i < 4 &&  i <= s.length() ; i++) {
+                String next = s.substring(0 , i );
+                if ( next.length() > 1 && next.charAt(0) == '0') continue;
+                int ip = Integer.parseInt(next);
+                if ( ip >= 0 && ip <= 255) {
+                    tmp.add(next);
+                    dfs(s.substring(i), tmp, level + 1 , ret );
+                    tmp.remove(tmp.size()  - 1);
                 }
             }
+
         }
     }
 }

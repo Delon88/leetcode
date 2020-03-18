@@ -3,26 +3,20 @@ package LC.SOL;
 public class MinimumWindowSubstring {
     class Solution {
         public String minWindow(String s, String t) {
-            if ( s == null || t == null || s.length() < t.length()) return "";
-            int[] hash = new int[128];
-            for ( int i = 0 ; i < t.length() ; i++) hash[t.charAt(i)]++;
-            int count = 0, index = 0, minLen = s.length() + 1;
-            for ( int start = 0 , end = 0 ; end < s.length() ; end++) {
-                char c = s.charAt(end);
-                hash[c]--;
-                if ( hash[c] >= 0 ) count++;
-                while ( count == t.length()) {
-                    if ( minLen > end - start + 1) {
-                        minLen = end - start + 1;
-                        index = start;
+            int[] hash = new int[256];
+            for ( int i = 0 ;i < t.length(); i++) hash[t.charAt(i)]++;
+            int start = 0, minLen = s.length() + 1, match = 0;
+            for ( int i = 0, j = 0 ; j < s.length(); j++) {
+                char c = s.charAt(j);
+                if ( --hash[c] >= 0 ) match++;
+                while ( match == t.length()) {
+                    if ( j - i + 1 < minLen ) {
+                        start = i; minLen = j - i + 1;
                     }
-                    char pre = s.charAt(start);
-                    hash[pre]++;
-                    if ( hash[pre] > 0 ) count--;
-                    start++;
+                    if ( ++hash[s.charAt(i++)] > 0 ) match--;
                 }
             }
-            return minLen == s.length() + 1 ? "" : s.substring(index, index + minLen);
+            return minLen == s.length() + 1 ? "" : s.substring(start , start + minLen);
         }
     }
 }

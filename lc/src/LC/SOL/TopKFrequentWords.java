@@ -5,25 +5,26 @@ import java.util.*;
 public class TopKFrequentWords {
     class Solution {
         public List<String> topKFrequent(String[] words, int k) {
-            Map<String, Integer> map = new HashMap<>();
-            for (String w : words) {
+            HashMap<String, Integer> map = new HashMap<>();
+            for (String w: words) {
                 map.put(w, map.getOrDefault(w, 0) + 1);
             }
-
-            PriorityQueue<Map.Entry<String, Integer>> q = new PriorityQueue<>(
-                    (p1, p2) -> p1.getValue() == p2.getValue() ? p2.getKey().compareTo(p1.getKey()) : p1.getValue() - p2.getValue());
-            for (Map.Entry<String, Integer> e : map.entrySet()) {
-                q.offer(e);
-                if (q.size() > k) {
-                    q.poll();
+            List<String>[] bucket = new ArrayList[words.length + 1];
+            for (String key: map.keySet()) {
+                int fre = map.get(key);
+                if (bucket[fre] == null) {
+                    bucket[fre] = new ArrayList<>();
+                }
+                bucket[fre].add(key);
+            }
+            List<String> res = new ArrayList<>();
+            for (int i = words.length; i > 0 && res.size() < k; i--) {
+                if (bucket[i] != null) {
+                    Collections.sort(bucket[i]);
+                    res.addAll(bucket[i]);
                 }
             }
-
-            List<String> ret = new LinkedList<>();
-            while (!q.isEmpty()) {
-                ret.add(0, q.poll().getKey());
-            }
-            return ret;
+            return res.subList(0, k);
         }
     }
 }

@@ -65,8 +65,6 @@ public class CourseScheduleII {
                     inDegree[to]--;
                     if (inDegree[to] == 0) {
                         toVisit.offer(to);
-                    } else if (inDegree[to] < 0) {
-                        return new int[0];
                     }
                 }
             }

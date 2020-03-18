@@ -4,28 +4,20 @@ import java.util.*;
 
 public class RepeatedDNASequences {
     class Solution {
-        Map<Character, Integer> map = new HashMap<>();
-
-        {
-            map.put('A', 0);
-            map.put('C', 1);
-            map.put('G', 2);
-            map.put('T', 3);
-        }
-
         public List<String> findRepeatedDnaSequences(String s) {
-            Set<String> ret = new HashSet<>();
-            Set<Integer> set = new HashSet<>();
             int mask = 0xFFFFF;
-            if (s.length() < 10) return new ArrayList<>();
-            int end = 0, num = 0;
-            for (; end < s.length(); end++) {
-                num = ((num << 2) | map.get(s.charAt(end))) & mask;
-                if ( end >= 9 && !set.add(num)) {
-                    ret.add(s.substring(end - 9, end + 1));
+            Map<Character,Integer> map = new HashMap<>();
+            map.put('A', 0); map.put('C', 1); map.put('G',2); map.put('T', 3);
+            Set<Integer> nums = new HashSet<>();
+            Set<String> seq = new HashSet<>();
+            int n = 0;
+            for ( int i = 0 ; i < s.length() ; i++) {
+                n = ((n << 2 ) | ( map.get(s.charAt(i)))) & mask;
+                if ( i >= 9 && !nums.add(n)) {
+                    seq.add(s.substring(i - 9, i + 1));
                 }
             }
-            return new ArrayList<>(ret);
+            return new ArrayList<>(seq);
         }
     }
 }

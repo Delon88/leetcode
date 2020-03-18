@@ -5,19 +5,17 @@ import LC.DS.TreeNode;
 public class SecondMinimumNodeInaBinaryTree {
     class Solution {
         public int findSecondMinimumValue(TreeNode root) {
-            if ( root == null ) return -1;
-            int minVal = minVal(root, root.val);
-            return minVal;
+            if (root == null) return -1;
+            return findSecondMinValue(root, root.val);
         }
 
-        int minVal(TreeNode node, int first) {
-            if ( node == null ) return -1;
-            if ( node.val != first) return node.val;
-            int left = minVal(node.left , first);
-            int right = minVal(node.right , first);
-            if ( left == -1 ) return right;
-            if ( right == -1) return left;
-            return Math.min(left , right);
+
+        public int findSecondMinValue(TreeNode root, int min) {
+            if (root == null) return -1;
+            if (root.val > min) return root.val;
+            int leftMin = findSecondMinValue(root.left, min);
+            int rightMin = findSecondMinValue(root.right, min);
+            return (leftMin == -1 || rightMin == -1) ? Math.max(leftMin, rightMin) : Math.min(leftMin, rightMin);
         }
     }
 }

@@ -1,32 +1,30 @@
 package LC.SOL;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class TheSkylineProblem {
     class Solution {
-        public List<int[]> getSkyline(int[][] buildings) {
+        public List<List<Integer>> getSkyline(int[][] buildings) {
             List<int[]> heights = new ArrayList<>();
             for ( int[] b : buildings) {
                 heights.add(new int[]{ b[0], -b[2]});
                 heights.add(new int[]{ b[1] , b[2]});
             }
             Collections.sort(heights, (a , b) -> { if ( a[0] != b[0] ) return a[0] - b[0];else return a[1] - b[1];});
-            PriorityQueue<Integer> q = new PriorityQueue<>((a , b) -> b - a);
-            q.offer(0);
+            TreeMap<Integer,Integer> map = new TreeMap<>((a , b) -> b - a);
+            map.put(0 , 1);
             int prev = 0;
-            List<int[]> ret = new ArrayList<>();
+            List<List<Integer>> ret = new ArrayList<>();
             for ( int[] h : heights) {
                 if ( h[1] < 0 ) {
-                    q.offer(-h[1]);
+                    map.put(-h[1], map.getOrDefault(-h[1], 0) + 1);
                 } else {
-                    q.remove(h[1]);
+                    map.put(h[1], map.get(h[1]) - 1);
+                    if ( map.get(h[1]) <= 0 ) map.remove(h[1]);
                 }
-                int cur = q.peek();
+                int cur = map.firstKey();
                 if ( cur != prev ) {
-                    ret.add(new int[]{h[0], cur});
+                    ret.add(Arrays.asList(h[0], cur));
                     prev = cur;
                 }
             }

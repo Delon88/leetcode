@@ -17,17 +17,15 @@ public class FrogJump {
             }
 
             for (int i = 0; i < stones.length - 1; i++) {
-                int stone = stones[i];
-                for (int next : map.get(stone)) {
-                    int reach = next + stone;
-                    if ( reach == stones[stones.length - 1]) {
-                        return true;
-                    }
-                    Set<Integer> set = map.get(reach);
-                    if ( set != null) {
-                        set.add(next);
-                        if ( next - 1 > 0 ) set.add(next - 1);
-                        set.add(next + 1);
+                Set<Integer> steps = map.get(stones[i]);
+                for ( int step : steps) {
+                    int next = step + stones[i];
+                    if ( next == stones[stones.length - 1]) return true;
+                    Set<Integer> nextStep = map.get(next);
+                    if ( nextStep != null ) {
+                        if ( step - 1 > 0 ) nextStep.add(step - 1);
+                        nextStep.add(step);
+                        nextStep.add(step + 1);
                     }
                 }
             }
