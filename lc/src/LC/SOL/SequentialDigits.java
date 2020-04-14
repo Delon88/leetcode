@@ -1,28 +1,25 @@
 package LC.SOL;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SequentialDigits {
     class Solution {
-        public int maxSideLength(int[][] mat, int threshold) {
-            int m = mat.length;
-            int n = mat[0].length;
-            int[][] sum = new int[m + 1][n + 1];
-
-            int res = 0;
-            int len = 1; // square side length
-
-            for (int i = 1; i <= m; i++) {
-                for (int j = 1; j <= n; j++) {
-                    sum[i][j] = sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1] + mat[i-1][j-1];
-
-                    if (i >= len && j >= len && sum[i][j] - sum[i-len][j] - sum[i][j-len] + sum[i-len][j-len] <= threshold)
-                        res = len++;
-                }
+        public List<Integer> sequentialDigits(int low, int high) {
+            int[] seqNums = {12, 23, 34, 45, 56, 67, 78, 89,
+                    123, 234, 345, 456, 567, 678, 789,
+                    1234, 2345, 3456, 4567, 5678, 6789,
+                    12345, 23456, 34567, 45678, 56789,
+                    123456, 234567, 345678, 456789,
+                    1234567, 2345678, 3456789,
+                    12345678, 23456789,
+                    123456789};
+            List<Integer> ret = new ArrayList<>();
+            for ( int s : seqNums) {
+                if ( s >= low && s <= high) ret.add(s);
             }
-            BigInteger
-            return res;
+            return ret;
         }
     }
 }
