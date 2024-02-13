@@ -11,7 +11,7 @@ public class ApplyDiscountEverynOrders {
         public Cashier(int n, int discount, int[] products, int[] prices) {
             this.n = n;
             this.discount = discount;
-            this.product = products;
+            this.products = products;
             this.prices = prices;
         }
         
